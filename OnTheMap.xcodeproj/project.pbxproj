@@ -13,6 +13,7 @@
 		326EDA151BEFC26A00004D53 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 326EDA131BEFC26A00004D53 /* Main.storyboard */; };
 		326EDA171BEFC26A00004D53 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 326EDA161BEFC26A00004D53 /* Assets.xcassets */; };
 		326EDA1A1BEFC26A00004D53 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 326EDA181BEFC26A00004D53 /* LaunchScreen.storyboard */; };
+		32A74C9A1BEFD73500F7845B /* LogInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A74C991BEFD73500F7845B /* LogInVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		326EDA161BEFC26A00004D53 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		326EDA191BEFC26A00004D53 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		326EDA1B1BEFC26A00004D53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		32A74C991BEFD73500F7845B /* LogInVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				326EDA111BEFC26A00004D53 /* SecondViewController.swift */,
 				326EDA131BEFC26A00004D53 /* Main.storyboard */,
 				326EDA161BEFC26A00004D53 /* Assets.xcassets */,
+				32A74C991BEFD73500F7845B /* LogInVC.swift */,
 				326EDA181BEFC26A00004D53 /* LaunchScreen.storyboard */,
 				326EDA1B1BEFC26A00004D53 /* Info.plist */,
 			);
@@ -142,6 +145,7 @@
 				326EDA121BEFC26A00004D53 /* SecondViewController.swift in Sources */,
 				326EDA0E1BEFC26A00004D53 /* AppDelegate.swift in Sources */,
 				326EDA101BEFC26A00004D53 /* FirstViewController.swift in Sources */,
+				32A74C9A1BEFD73500F7845B /* LogInVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,6 +295,7 @@
 				326EDA201BEFC26A00004D53 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
