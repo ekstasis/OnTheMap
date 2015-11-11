@@ -10,26 +10,26 @@ import UIKit
 
 class LogInVC: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
 
-        // Do any additional setup after loading the view.
+    @IBAction func loginButton(sender: UIButton) {
+        
+        guard let user = emailTextField.text, pass = passwordTextField.text else {
+            //////////////////     show alert dialog
+            return
+        }
+        
+        let userInfo = ["username": user, "password": pass]
+        
+        OTMClient.sharedInstance().login(userInfo) { status, error in
+            guard error == nil else {
+                ////////////////   deal with error
+                return
+            }
+            let navVC = self.storyboard?.instantiateViewControllerWithIdentifier("Main Nav VC") as! UINavigationController
+            self.presentViewController(navVC, animated: true, completion: nil)
+        }
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
