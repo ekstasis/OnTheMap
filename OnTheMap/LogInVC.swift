@@ -20,13 +20,15 @@ class LogInVC: UIViewController {
             return
         }
         
-        let userInfo = ["username": user, "password": pass]
+////////////////
+        let userInfo = ["username": "straightstory@gmail.com", "password": "ratsoup"]
         
-        OTMClient.sharedInstance().login(userInfo) { status, error in
+        OTMClient.sharedInstance().createSession(userInfo) { error in
             guard error == nil else {
-                ////////////////   deal with error
+                print(error)
                 return
             }
+            // Start app
             let navVC = self.storyboard?.instantiateViewControllerWithIdentifier("Main Nav VC") as! UINavigationController
             self.presentViewController(navVC, animated: true, completion: nil)
         }
