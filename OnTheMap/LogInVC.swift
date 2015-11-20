@@ -17,14 +17,13 @@ class LogInVC: UIViewController {
 
     @IBAction func loginButton(sender: UIButton) {
         
-//////// why isn't this failing?
-////////    guard let user = emailTextField.text, pass = passwordTextField.text else {
-            
-//////////////////     show alert dialog
-//            return
+//        guard let user = emailTextField.text, pass = passwordTextField.text else {
+//            
+//            // show alert dialog
+//            // return
 //        }
         
-//////////////// temporary auto-login
+        // temporary auto-login
         let userInfo = ["username": "straightstory@gmail.com", "password": "ratsoup"]
         
         client.createSession(userInfo) { userID, sessionID, error in

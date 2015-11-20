@@ -35,7 +35,6 @@ class OTMClient {
         request.HTTPBody = httpBody
         request.HTTPMethod = "POST"
         
-        /// better names for "JSONData" etc.
         taskForMethod(request) { JSONData, error in
             
             guard error == nil else {
@@ -46,7 +45,7 @@ class OTMClient {
             
             let sessionJSON = self.createJSON(self.trimUdacityData(JSONData!))
             
-            // createJSON return NSError instead of NSDictionary if it fails
+            // createJSON returns NSError instead of NSDictionary if it fails
             if let error = sessionJSON as? NSError {
                 loginHandler(userID: nil, sessionID: nil, error: error)
             }
@@ -69,30 +68,24 @@ class OTMClient {
             loginHandler(userID: accountKey, sessionID: sessionID, error: nil)
         }
         
-        // Returned JSON example from call:
-        //        {
-        //            "account":{
-        //                "registered":true,
-        //                "key":"3903878747"
-        //            },
-        //            "session":{
-        //                "id":"1457628510Sc18f2ad4cd3fb317fb8e028488694088",
-        //                "expiration":"2015-05-10T16:48:30.760460Z"
-        //            }
-        //        }
     }
     
     func getUserName(loginHandler: (first: String?, last: String?, error: NSError?) -> Void) {
         
-        /// factor out?
-//        let httpBody = try! NSJSONSerialization.dataWithJSONObject(body, options: .PrettyPrinted)
+/// factor out?
+//  let httpBody = try! NSJSONSerialization.dataWithJSONObject(body, options: .PrettyPrinted)
         
+        /*
+        * Create URLRequest
+        */
         let url = OTMClient.UdacityMethods.User.rawValue + self.accountKey!
         let request = NSMutableURLRequest(URL: NSURL(string: url)!)
-//        request.HTTPBody = httpBody
+        //        request.HTTPBody = httpBody
         request.HTTPMethod = "GET"
         
-        /// better names for "JSONData" etc.
+        /*
+        * taskForMethod Completion Handler
+        */
         taskForMethod(request) { JSONData, error in
             
             guard error == nil else {
@@ -100,10 +93,11 @@ class OTMClient {
                 loginHandler(first: nil, last: nil, error: error)
                 return
             }
-///// var name
+            
+            // Udacity JSON needs first 5 bytes trimmed
             let sessionJSON = self.createJSON(self.trimUdacityData(JSONData!))
             
-            // createJSON return NSError instead of NSDictionary if it fails
+            // createJSON returns NSError instead of NSDictionary if it fails
             if let error = sessionJSON as? NSError {
                 loginHandler(first: nil, last: nil, error: error)
             }
