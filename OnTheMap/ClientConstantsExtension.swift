@@ -12,7 +12,7 @@ extension OTMClient {
     
     enum UdacityMethods: String {
         case Session = "https://www.udacity.com/api/session"
-        case User = "https://www.udacity.com/api/users/<user_id>"
+        case User = "https://www.udacity.com/api/users/" // plus <userID>
     }
     
     enum ParseMethods: String {

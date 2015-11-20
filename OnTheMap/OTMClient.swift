@@ -12,6 +12,8 @@ class OTMClient {
     
     var accountKey:  String?
     var sessionID: String?
+    var firstName: String?
+    var lastName: String?
     
     let urlSession = NSURLSession.sharedSession()
     
@@ -22,50 +24,49 @@ class OTMClient {
         return SharedInstance.sharedInstance
     }
     
-    func createSession(userInfo: [String: String], loginHandler: (error: NSError?) -> Void) {
+    func createSession(userInfo: [String: String], loginHandler: (userID: String?, sessionID: String?, error: NSError?) -> Void) {
         
         let body = ["udacity": userInfo]
+        
+        /// factor out?
         let httpBody = try! NSJSONSerialization.dataWithJSONObject(body, options: .PrettyPrinted)
         
         let request = NSMutableURLRequest(URL: NSURL(string: OTMClient.UdacityMethods.Session.rawValue)!)
         request.HTTPBody = httpBody
+        request.HTTPMethod = "POST"
         
-        taskForPostMethod(request) { JSONData, error in
+        /// better names for "JSONData" etc.
+        taskForMethod(request) { JSONData, error in
             
             guard error == nil else {
                 // deal with error here instead?
-                loginHandler(error: error)
+                loginHandler(userID: nil, sessionID: nil, error: error)
                 return
             }
             
-            let JSONData = JSONData!.subdataWithRange(NSMakeRange(5, JSONData!.length))
-            let JSONObject = self.createJSON(JSONData)
+            let sessionJSON = self.createJSON(self.trimUdacityData(JSONData!))
             
-            if let error = JSONObject as? NSError {
-                loginHandler(error: error)
+            // createJSON return NSError instead of NSDictionary if it fails
+            if let error = sessionJSON as? NSError {
+                loginHandler(userID: nil, sessionID: nil, error: error)
             }
             
-            let resultDictionary = JSONObject as? NSDictionary
+            let resultDictionary = sessionJSON as? NSDictionary
             let account = resultDictionary?["account"] as? NSDictionary
             let session = resultDictionary?["session"] as? NSDictionary
             let accountKey = account?["key"] as? String
             let sessionID = session?["id"] as? String
             
-            guard accountKey != nil || sessionID != nil else {
+            guard accountKey != nil && sessionID != nil else {
                 let message = [NSLocalizedDescriptionKey: "Failed to retrieve user and session from JSON"]
                 let error = NSError(domain: "createSession:", code: 1, userInfo: message)
                 
-                loginHandler(error: error)
+                loginHandler(userID: nil, sessionID: nil, error: error)
                 return
             }
             
-            self.accountKey = accountKey
-            self.sessionID = sessionID
-            
-            print(self.sessionID)
-            print(self.accountKey)
-            
-            loginHandler(error: nil)
+            // user/account var names need to be normalized
+            loginHandler(userID: accountKey, sessionID: sessionID, error: nil)
         }
         
         // Returned JSON example from call:
@@ -81,11 +82,53 @@ class OTMClient {
         //        }
     }
     
-    func taskForPostMethod(request: NSMutableURLRequest, handler: (JSONData: NSData?, error: NSError?) -> Void) {
+    func getUserName(loginHandler: (first: String?, last: String?, error: NSError?) -> Void) {
+        
+        /// factor out?
+//        let httpBody = try! NSJSONSerialization.dataWithJSONObject(body, options: .PrettyPrinted)
+        
+        let url = OTMClient.UdacityMethods.User.rawValue + self.accountKey!
+        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+//        request.HTTPBody = httpBody
+        request.HTTPMethod = "GET"
+        
+        /// better names for "JSONData" etc.
+        taskForMethod(request) { JSONData, error in
+            
+            guard error == nil else {
+                // deal with error here instead?
+                loginHandler(first: nil, last: nil, error: error)
+                return
+            }
+///// var name
+            let sessionJSON = self.createJSON(self.trimUdacityData(JSONData!))
+            
+            // createJSON return NSError instead of NSDictionary if it fails
+            if let error = sessionJSON as? NSError {
+                loginHandler(first: nil, last: nil, error: error)
+            }
+            
+            let resultDictionary = sessionJSON as? NSDictionary
+            let userDetails = resultDictionary?["user"] as? NSDictionary
+            let firstName = userDetails?["first_name"] as? String
+            let lastName = userDetails?["last_name"] as? String
+            
+            guard firstName != nil && lastName != nil else {
+                let message = [NSLocalizedDescriptionKey: "Failed to retrieve user and session from JSON"]
+                let error = NSError(domain: "createSession:", code: 1, userInfo: message)
+                
+                loginHandler(first: nil, last: nil, error: error)
+                return
+            }
+            
+            loginHandler(first: firstName, last: lastName, error: nil)
+        }
+    }
+    
+    func taskForMethod(request: NSMutableURLRequest, handler: (JSONData: NSData?, error: NSError?) -> Void) {
         
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPMethod = "POST"
         
         let task = urlSession.dataTaskWithRequest(request) { data, response, error in
             
@@ -114,18 +157,18 @@ class OTMClient {
         
         var parsedResult: AnyObject?
         
-        let dataString = NSString(data: data, encoding: NSUTF8StringEncoding)
-        print(dataString)
-        
         do {
             parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
         } catch {
             let userInfo = [NSLocalizedDescriptionKey: "Couldn't create JSON Object with data: \(data)"]
             let error = NSError(domain: "createJSON", code: 1, userInfo: userInfo)
-            
             return error
         }
         
         return parsedResult
+    }
+    
+    func trimUdacityData(data: NSData) -> NSData {
+        return data.subdataWithRange(NSMakeRange(5, data.length))
     }
 }
