@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 
 
-class MapVC: UIViewController {
+class MapVC: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -19,15 +19,21 @@ class MapVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Do I need to say mapview.delegate = self???
+        
         client.getLocations() { locations, error in
             if let error = error {
                 print(error)
             } else {
                 self.client.studentLocations = StudentInformation.arrayFromJSON(locations!)
                 self.populateAnnotations()
-                self.addAnnotations()
             }
         }
+    }
+    
+    /////
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     func populateAnnotations() {
@@ -36,11 +42,27 @@ class MapVC: UIViewController {
             let newAnnotation = Annotation(firstName: student.firstName, lastName: student.lastName, latitude: student.latitude, longitude: student.longitude, url: student.mediaURL)
                 client.annotations.append(newAnnotation)
         }
+        
+        mapView.addAnnotations(self.client.annotations)
     }
-    func addAnnotations() {
-        for annotation in client.annotations {
-            mapView.addAnnotation(annotation)
+    
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("Pin View")
+        
+        if pinView == nil {
+            pinView = MKPinAnnotationView.init(annotation: annotation, reuseIdentifier: "Pin View")
+        } else {
+            pinView?.annotation = annotation
         }
+            let detailButton = UIButton(type: UIButtonType.DetailDisclosure)
+            pinView?.detailCalloutAccessoryView = detailButton
+        
+        return pinView
+    }
+    
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        ///
     }
 }
 

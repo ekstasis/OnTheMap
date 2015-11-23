@@ -14,6 +14,10 @@ class LogInVC: UIViewController {
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    
+    override func viewDidLoad() {
+        loginButton(UIButton.init())
+    }
 
     @IBAction func loginButton(sender: UIButton) {
         
