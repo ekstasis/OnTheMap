@@ -7,19 +7,40 @@
 //
 
 import UIKit
+import MapKit
+
 
 class MapVC: UIViewController {
-
+    
+    @IBOutlet weak var mapView: MKMapView!
+    
+    let client = OTMClient.sharedInstance()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        client.getLocations() { locations, error in
+            if let error = error {
+                print(error)
+            } else {
+                self.client.studentLocations = StudentInformation.arrayFromJSON(locations!)
+                self.populateAnnotations()
+                self.addAnnotations()
+            }
+        }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func populateAnnotations() {
+        
+        for student in client.studentLocations {
+            let newAnnotation = Annotation(firstName: student.firstName, lastName: student.lastName, latitude: student.latitude, longitude: student.longitude, url: student.mediaURL)
+                client.annotations.append(newAnnotation)
+        }
     }
-
-
+    func addAnnotations() {
+        for annotation in client.annotations {
+            mapView.addAnnotation(annotation)
+        }
+    }
 }
 
