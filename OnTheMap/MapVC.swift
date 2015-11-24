@@ -19,9 +19,10 @@ class MapVC: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do I need to say mapview.delegate = self???
+        mapView.delegate = self
         
         client.getLocations() { locations, error in
+            print("getlocations CH")
             if let error = error {
                 print(error)
             } else {
@@ -29,11 +30,13 @@ class MapVC: UIViewController, MKMapViewDelegate {
                 self.populateAnnotations()
             }
         }
+        print("did getlocations handler start?")
     }
     
     /////
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.mapView.showAnnotations(self.client.annotations, animated: true)
     }
     
     func populateAnnotations() {
@@ -48,15 +51,21 @@ class MapVC: UIViewController, MKMapViewDelegate {
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("Pin View")
+        if (annotation is MKUserLocation) {
+            return nil
+        }
+        
+        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("Pin View") as? MKPinAnnotationView
         
         if pinView == nil {
-            pinView = MKPinAnnotationView.init(annotation: annotation, reuseIdentifier: "Pin View")
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "PinView")
+            pinView?.canShowCallout = true
+//            pinView?.pinColor = MKPinAnnotationColor.Red
         } else {
             pinView?.annotation = annotation
         }
-            let detailButton = UIButton(type: UIButtonType.DetailDisclosure)
-            pinView?.detailCalloutAccessoryView = detailButton
+        let detailButton = UIButton(type: UIButtonType.DetailDisclosure)
+        pinView?.rightCalloutAccessoryView = detailButton
         
         return pinView
     }

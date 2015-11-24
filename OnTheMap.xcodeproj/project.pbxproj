@@ -87,10 +87,10 @@
 				3219025A1BF10B9D00005F00 /* NewLocationVC.swift */,
 				3219025E1BF1137E00005F00 /* ClientConstantsExtension.swift */,
 				326EDA0D1BEFC26A00004D53 /* AppDelegate.swift */,
+				326B27E01C0274B100923A6E /* Annotation.swift */,
 				326EDA161BEFC26A00004D53 /* Assets.xcassets */,
 				326EDA181BEFC26A00004D53 /* LaunchScreen.storyboard */,
 				326EDA1B1BEFC26A00004D53 /* Info.plist */,
-				326B27E01C0274B100923A6E /* Annotation.swift */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
