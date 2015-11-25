@@ -25,7 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		321902581BF0FBFF00005F00 /* OnTheMapTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnTheMapTabBarController.swift; sourceTree = SOURCE_ROOT; };
+		321902581BF0FBFF00005F00 /* OnTheMapTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnTheMapTabBarController.swift; path = OnTheMap/OnTheMapTabBarController.swift; sourceTree = SOURCE_ROOT; };
 		3219025A1BF10B9D00005F00 /* NewLocationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewLocationVC.swift; sourceTree = "<group>"; };
 		3219025C1BF1135000005F00 /* OTMClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMClient.swift; sourceTree = "<group>"; };
 		3219025E1BF1137E00005F00 /* ClientConstantsExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientConstantsExtension.swift; sourceTree = "<group>"; };

@@ -71,7 +71,7 @@ class MapVC: UIViewController, MKMapViewDelegate {
     }
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        ///
+        mapView(mapView: mapView, didDeselectAnnotationView: view)
     }
 }
 
