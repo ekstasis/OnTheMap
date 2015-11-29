@@ -13,18 +13,17 @@ import MapKit
 class MapVC: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var map: MKMapView!
-    
+////////
     var testCounter = 0
     
     let client = OTMClient.sharedInstance()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         map.delegate = self
     }
     
-    /////
+///// or viewdidappear?
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         populateAnnotations()
@@ -32,24 +31,27 @@ class MapVC: UIViewController, MKMapViewDelegate {
     
     func populateAnnotations() {
         
-        // Clear the map's annotations by removing the current annotation array
+        // This function also use for refreshing
         map.removeAnnotations(map.annotations)
         
         client.getLocations() { locations, error in
             
             guard error == nil else {
+//// ERROR
                 print(error)
                 return
             }
-            
+//// variable names
             self.client.studentLocations = StudentInformation.arrayFromJSON(locations!)
             
             for student in self.client.studentLocations {
                 let newAnnotation = Annotation(firstName: student.firstName, lastName: student.lastName, latitude: student.latitude, longitude: student.longitude, url: student.mediaURL)
-                self.map.addAnnotation(newAnnotation)
-                print("\(self.testCounter++):  add Annotation: \(student.updatedAt)")
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.map.addAnnotation(newAnnotation)
+                }
+                
             }
-                    self.map.showAnnotations(self.map.annotations, animated: true)
         }
     }
     

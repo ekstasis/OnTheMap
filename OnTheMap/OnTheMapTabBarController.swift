@@ -23,7 +23,7 @@ class OnTheMapTabBarController: UITabBarController {
     }
 
     func logOut() {
-//        tabBarController?.dismissViewControllerAnimated(true, completion: nil)
+        navigationController?.dismissViewControllerAnimated(true, completion: nil)
         print("Log Out")
     }
     
