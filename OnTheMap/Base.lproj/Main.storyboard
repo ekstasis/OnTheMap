@@ -34,7 +34,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="map" id="acW-dT-cKf"/>
                     <connections>
-                        <outlet property="mapView" destination="FNa-yc-PXM" id="pQV-iI-Fmi"/>
+                        <outlet property="map" destination="FNa-yc-PXM" id="vwE-cz-1Ji"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>

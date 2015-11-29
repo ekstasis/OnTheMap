@@ -30,26 +30,25 @@ class OnTheMapTabBarController: UITabBarController {
     func newLocation() {
         let newLocationVC = storyboard?.instantiateViewControllerWithIdentifier("New Location") as! NewLocationVC
         presentViewController(newLocationVC, animated: true, completion: nil)
-        
     }
     
     func refresh() {
-        print("refresh")
+        let displayedTab = viewControllers![selectedIndex]
+        switch selectedIndex {
+        case 0:
+            let map = displayedTab as! MapVC
+            map.populateAnnotations()
+        case 1:
+            let table = displayedTab as! ListVC
+            table.refresh()
+        default:
+            print("\(selectedIndex) does not refer to a valid tab view controller")
+        }
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

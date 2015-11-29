@@ -16,7 +16,7 @@ class OTMClient {
     var lastName: String?
     
     var studentLocations = [StudentInformation]()
-    var annotations = [Annotation]()
+//    var annotations = [Annotation]()
     
     let urlSession = NSURLSession.sharedSession()
     

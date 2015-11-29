@@ -1,4 +1,4 @@
-//
+//jesus"i
 //  MapVC.swift
 //  OnTheMap
 //
@@ -12,41 +12,45 @@ import MapKit
 
 class MapVC: UIViewController, MKMapViewDelegate {
     
-    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var map: MKMapView!
+    
+    var testCounter = 0
     
     let client = OTMClient.sharedInstance()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        mapView.delegate = self
-        
-        client.getLocations() { locations, error in
-            print("getlocations CH")
-            if let error = error {
-                print(error)
-            } else {
-                self.client.studentLocations = StudentInformation.arrayFromJSON(locations!)
-                self.populateAnnotations()
-            }
-        }
-        print("did getlocations handler start?")
+        map.delegate = self
     }
     
     /////
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        self.mapView.showAnnotations(self.client.annotations, animated: true)
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        populateAnnotations()
     }
     
     func populateAnnotations() {
         
-        for student in client.studentLocations {
-            let newAnnotation = Annotation(firstName: student.firstName, lastName: student.lastName, latitude: student.latitude, longitude: student.longitude, url: student.mediaURL)
-                client.annotations.append(newAnnotation)
-        }
+        // Clear the map's annotations by removing the current annotation array
+        map.removeAnnotations(map.annotations)
         
-        mapView.addAnnotations(self.client.annotations)
+        client.getLocations() { locations, error in
+            
+            guard error == nil else {
+                print(error)
+                return
+            }
+            
+            self.client.studentLocations = StudentInformation.arrayFromJSON(locations!)
+            
+            for student in self.client.studentLocations {
+                let newAnnotation = Annotation(firstName: student.firstName, lastName: student.lastName, latitude: student.latitude, longitude: student.longitude, url: student.mediaURL)
+                self.map.addAnnotation(newAnnotation)
+                print("\(self.testCounter++):  add Annotation: \(student.updatedAt)")
+            }
+                    self.map.showAnnotations(self.map.annotations, animated: true)
+        }
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -55,12 +59,11 @@ class MapVC: UIViewController, MKMapViewDelegate {
             return nil
         }
         
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("Pin View") as? MKPinAnnotationView
+        var pinView = map.dequeueReusableAnnotationViewWithIdentifier("Pin View") as? MKPinAnnotationView
         
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "PinView")
             pinView?.canShowCallout = true
-//            pinView?.pinColor = MKPinAnnotationColor.Red
         } else {
             pinView?.annotation = annotation
         }
@@ -71,7 +74,7 @@ class MapVC: UIViewController, MKMapViewDelegate {
     }
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        mapView(mapView: mapView, didDeselectAnnotationView: view)
+        print("callouttapped")
     }
 }
 
