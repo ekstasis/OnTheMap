@@ -16,7 +16,7 @@ extension OTMClient {
     }
     
     enum ParseMethods: String {
-        case Location = "https://api.parse.com/1/classes/StudentLocation"
+        case Locations = "https://api.parse.com/1/classes/StudentLocation"
         case Object = "https://api.parse.com/1/classes/StudentLocation/<objectID>"
     }
     

@@ -32,10 +32,10 @@ extension OTMClient {
                 return
             }
             
-            let sessionJSON = self.createJSON(self.trimUdacityData(JSONData!))
+            let sessionJSON = self.JSONObjectFromNSData(self.trimUdacityData(JSONData!))
             
             
-            // createJSON returns NSError instead of NSDictionary if it fails
+            // JSONObjectFromNSData returns NSError instead of NSDictionary if it fails
             if let error = sessionJSON as? NSError {
                 loginHandler(userID: nil, sessionID: nil, error: error)
             }
@@ -82,9 +82,9 @@ extension OTMClient {
             }
             
             // Udacity JSON needs first 5 bytes trimmed
-            let sessionJSON = self.createJSON(self.trimUdacityData(JSONData!))
+            let sessionJSON = self.JSONObjectFromNSData(self.trimUdacityData(JSONData!))
             
-            // createJSON returns NSError instead of NSDictionary if it fails
+            // JSONObjectFromNSData returns NSError instead of NSDictionary if it fails
             if let error = sessionJSON as? NSError {
                 loginHandler(first: nil, last: nil, error: error)
             }
@@ -111,16 +111,13 @@ extension OTMClient {
         /*
         * Create URLRequest
         */
-        let url = ParseMethods.Location.rawValue + "?limit=100&order=-updatedAt"
+        let url = ParseMethods.Locations.rawValue + "?limit=100&order=-updatedAt"
         
         let request = NSMutableURLRequest(URL: NSURL(string: url)!)
         request.HTTPMethod = "GET"
         request.addValue(ParseInfo.ApplicationID.rawValue, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(ParseInfo.APIKey.rawValue, forHTTPHeaderField: "X-Parse-REST-API-Key")
         
-        /*
-        * taskForMethod Completion Handler
-        */
         taskForMethod(request) { locationsJSON, error in
             
             guard error == nil else {
@@ -128,12 +125,12 @@ extension OTMClient {
                 return
             }
             
-            // createJSON returns NSError instead of NSDictionary if it fails
-            if let _ = locationsJSON as? NSError {
+            // JSONObjectFromNSData returns NSError instead of NSDictionary if it fails
+            if locationsJSON is NSError {
                 completion(locations: nil, error: nil)
             }
             
-            let studentLocations = self.createJSON(locationsJSON!)
+            let studentLocations = self.JSONObjectFromNSData(locationsJSON!)
             
             if let locations = studentLocations as? [String: AnyObject] {
                 completion(locations: locations, error: nil)
@@ -146,7 +143,7 @@ extension OTMClient {
         }
     }
     
-    func createJSON(data: NSData) -> AnyObject? {
+    func JSONObjectFromNSData(data: NSData) -> AnyObject? {
         
         var parsedResult: AnyObject?
         
@@ -154,7 +151,7 @@ extension OTMClient {
             parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
         } catch {
             let userInfo = [NSLocalizedDescriptionKey: "Couldn't create JSON Object with data: \(data)"]
-            let error = NSError(domain: "createJSON", code: 1, userInfo: userInfo)
+            let error = NSError(domain: "JSONObjectFromNSData", code: 1, userInfo: userInfo)
             return error
         }
         

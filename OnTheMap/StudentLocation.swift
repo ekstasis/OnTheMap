@@ -19,6 +19,8 @@ struct StudentInformation {
     let userID: String // "1234",
     let updatedAt: String // "2015-03-11T02:42:59.217Z"
     
+    var fullName: String { return "\(firstName) \(lastName)" }
+    
     init(location: [String: AnyObject]) {
         createdAt = location["createdAt"] as! String
         firstName = location["firstName"] as! String

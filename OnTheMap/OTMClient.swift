@@ -27,6 +27,18 @@ class OTMClient {
         return SharedInstance.sharedInstance
     }
     
+    func update() {
+        getLocations() { locations, error in
+            guard error == nil else {
+                //// ERROR
+                print(error)
+                return
+            }
+            //// variable names
+            self.studentLocations = StudentInformation.arrayFromJSON(locations!)
+        }
+    }
+        
     func taskForMethod(request: NSMutableURLRequest, handler: (JSONData: NSData?, error: NSError?) -> Void) {
         
         request.addValue("application/json", forHTTPHeaderField: "Accept")

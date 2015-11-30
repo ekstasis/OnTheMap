@@ -33,17 +33,8 @@ class OnTheMapTabBarController: UITabBarController {
     }
     
     func refresh() {
-        let displayedTab = viewControllers![selectedIndex]
-        switch selectedIndex {
-        case 0:
-            let map = displayedTab as! MapVC
-            map.populateAnnotations()
-        case 1:
-            let table = displayedTab as! ListVC
-            table.refresh()
-        default:
-            print("\(selectedIndex) does not refer to a valid tab view controller")
-        }
+        let displayedTab = viewControllers![selectedIndex] as! Refreshable
+        displayedTab.refresh()
     }
     
     override func didReceiveMemoryWarning() {
