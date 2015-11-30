@@ -18,8 +18,13 @@ class TableVC: UITableViewController, Refreshable {
     }
 
     func refresh() {
-        client.update()
-        tableView.reloadData()
+        client.update() { error in
+            guard error == nil else {
+                print(error)
+                return
+            }
+            self.tableView.reloadData()
+        }
     }
 
     // MARK: - Table view data source

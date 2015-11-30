@@ -27,15 +27,19 @@ class OTMClient {
         return SharedInstance.sharedInstance
     }
     
-    func update() {
+    func displayError(error: NSError) {
+        
+    }
+    
+    func update(completion: (error: NSError?) -> Void) {
         getLocations() { locations, error in
             guard error == nil else {
-                //// ERROR
-                print(error)
+                completion(error: error)
                 return
             }
             //// variable names
             self.studentLocations = StudentInformation.arrayFromJSON(locations!)
+            completion(error: nil)
         }
     }
         

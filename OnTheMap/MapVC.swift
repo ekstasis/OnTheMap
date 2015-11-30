@@ -26,7 +26,12 @@ class MapVC: UIViewController, MKMapViewDelegate, Refreshable {
         
         map.removeAnnotations(map.annotations)
         
-        client.update()
+        client.update() { error in
+            guard error == nil else {
+                print(error)
+                return
+            }
+        }
         
         for student in client.studentLocations {
             let newAnnotation = Annotation(firstName: student.firstName, lastName: student.lastName, latitude: student.latitude, longitude: student.longitude, url: student.mediaURL)

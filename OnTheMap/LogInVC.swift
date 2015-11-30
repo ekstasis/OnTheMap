@@ -34,33 +34,37 @@ class LogInVC: UIViewController {
         client.createSession(userInfo) { userID, sessionID, error in
             
             guard error == nil else {
-                //////////////// ERROR
                 print(error)
                 return
             }
+            
             self.client.sessionID = sessionID!
             self.client.accountKey = userID!
             print(self.client.sessionID)
             print(self.client.accountKey)
             
             self.client.getUserName() { first, last, error in
-                if error == nil {
-                    self.client.firstName = first!
-                    self.client.lastName = last!
-                    print("First: \(self.client.firstName!) - Last: \(self.client.lastName!)")
-                } else {
+                
+                guard error == nil else {
                     print(error)
                     return
                 }
+                
+                self.client.firstName = first!
+                self.client.lastName = last!
+                print("First: \(self.client.firstName!) - Last: \(self.client.lastName!)")
+                
+                self.client.update() { error in
+                    
+                    guard error == nil else {
+                        print(error)
+                        return
+                    }
+                    
+                    let navVC = self.storyboard?.instantiateViewControllerWithIdentifier("Main Nav VC") as! UINavigationController
+                    self.presentViewController(navVC, animated: true, completion: nil)
+                }
             }
         }
-        
-        dispatch_async(dispatch_get_main_queue()) {
-            self.client.update()
-        }
-        
-        let navVC = self.storyboard?.instantiateViewControllerWithIdentifier("Main Nav VC") as! UINavigationController
-        self.presentViewController(navVC, animated: true, completion: nil)
     }
-    
 }
