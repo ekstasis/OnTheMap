@@ -63,7 +63,30 @@ class MapVC: UIViewController, MKMapViewDelegate, Refreshable {
     }
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print("callouttapped")
+        
+        guard let annotation = view.annotation as? Annotation else {
+            print("Could not cast as Annotation")
+            return
+        }
+        guard var subTitle = annotation.subtitle else {
+            print("Could not pull subTitle from annotation")
+            return
+        }
+        
+        // URL must have http(s)://
+        let http = "http"
+        let range = subTitle.rangeOfString(http, options: NSStringCompareOptions.CaseInsensitiveSearch)
+        if range == nil {
+            subTitle = http + "://" + subTitle
+        }
+        
+        print(subTitle)
+        
+        guard client.launchSafariWithURLString(subTitle) else {
+//            //////////////  DEAL WITH ERROR
+            print("Error opening URL:  \"\(subTitle)\"")
+            return
+        }
     }
 }
 

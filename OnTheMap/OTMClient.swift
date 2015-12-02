@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class OTMClient {
     
@@ -16,8 +17,6 @@ class OTMClient {
     var lastName: String?
     
     var studentLocations = [StudentInformation]()
-//    var annotations = [Annotation]()
-    
     let urlSession = NSURLSession.sharedSession()
     
     class func sharedInstance() -> OTMClient {
@@ -25,10 +24,6 @@ class OTMClient {
             static var sharedInstance = OTMClient()
         }
         return SharedInstance.sharedInstance
-    }
-    
-    func displayError(error: NSError) {
-        
     }
     
     func update(completion: (error: NSError?) -> Void) {
@@ -39,10 +34,11 @@ class OTMClient {
             }
             //// variable names
             self.studentLocations = StudentInformation.arrayFromJSON(locations!)
+            print(self.studentLocations[0].fullName + ": " + self.studentLocations[0].updatedAt)
             completion(error: nil)
         }
     }
-        
+    
     func taskForMethod(request: NSMutableURLRequest, handler: (JSONData: NSData?, error: NSError?) -> Void) {
         
         request.addValue("application/json", forHTTPHeaderField: "Accept")
@@ -55,7 +51,7 @@ class OTMClient {
                 handler(JSONData: nil, error: error)
                 return
             }
-           
+            
             let status = (response as? NSHTTPURLResponse)?.statusCode
             
             guard let code = status where code >= 200 && code <= 299 else {
@@ -69,5 +65,14 @@ class OTMClient {
         }
         
         task.resume()
+    }
+    
+    func launchSafariWithURLString(urlString: String) -> Bool {
+        
+        if let url = NSURL(string: urlString) {
+            return UIApplication.sharedApplication().openURL(url)
+        } else {
+            return false
+        }
     }
 }
