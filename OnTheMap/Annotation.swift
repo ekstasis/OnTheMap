@@ -15,18 +15,10 @@ class Annotation: NSObject, MKAnnotation {
     var title: String?
     var subtitle: String?
     
-//    var firstName = String()
-//    var lastName = String()
-//    let latitude: CLLocationDegrees
-//    let longitude: CLLocationDegrees
-//    let website: String
-    
     init(firstName: String, lastName: String, latitude: Double, longitude: Double, url: String) {
         
         coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         title = "\(firstName) \(lastName)"
         subtitle = url
-        
     }
-    
 }

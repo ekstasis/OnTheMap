@@ -56,6 +56,7 @@ class MapVC: UIViewController, MKMapViewDelegate, Refreshable {
         } else {
             pinView?.annotation = annotation
         }
+        
         let detailButton = UIButton(type: UIButtonType.DetailDisclosure)
         pinView?.rightCalloutAccessoryView = detailButton
         
