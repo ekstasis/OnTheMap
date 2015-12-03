@@ -301,105 +301,87 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h9t-e2-ebs">
-                                        <rect key="frame" x="0.0" y="265" width="600" height="10"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lNe-eM-q7E">
+                                        <rect key="frame" x="0.0" y="265" width="600" height="315"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fat-bi-8MZ">
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="5"/>
+                                                <animations/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="5" id="VvT-lA-XlY"/>
+                                                </constraints>
+                                            </view>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Globe" translatesAutoresizingMaskIntoConstraints="NO" id="nZ5-XH-oqj">
+                                                <rect key="frame" x="163" y="5" width="275" height="275"/>
+                                                <animations/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="nZ5-XH-oqj" secondAttribute="height" multiplier="1:1" id="ec3-XR-BUV"/>
+                                                </constraints>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q6u-bG-nBH">
+                                                <rect key="frame" x="250" y="280" width="100" height="25"/>
+                                                <animations/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="25" id="2eG-QT-iRj"/>
+                                                    <constraint firstAttribute="width" constant="100" id="A4g-jK-kUM"/>
+                                                    <constraint firstAttribute="width" secondItem="Q6u-bG-nBH" secondAttribute="height" multiplier="3:1" id="kD0-WK-ryf"/>
+                                                    <constraint firstAttribute="height" constant="80" id="lP9-Mw-vIN"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                <size key="titleShadowOffset" width="3" height="2"/>
+                                                <state key="normal" title="Find Me"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="10"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="kD0-WK-ryf"/>
+                                                        <exclude reference="lP9-Mw-vIN"/>
+                                                    </mask>
+                                                </variation>
+                                                <connections>
+                                                    <action selector="pressedFindLocation:" destination="C43-Ch-gDp" eventType="touchUpInside" id="ioz-hu-yca"/>
+                                                </connections>
+                                            </button>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TW7-b0-FGQ">
+                                                <rect key="frame" x="0.0" y="305" width="600" height="10"/>
+                                                <animations/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="10" id="r4Z-bO-kTp"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
                                         <animations/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="10" id="FTV-5I-0Vg"/>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="jeN-Qa-occ"/>
+                                            <constraint firstItem="fat-bi-8MZ" firstAttribute="width" secondItem="lNe-eM-q7E" secondAttribute="width" id="6Rw-xs-LtN"/>
+                                            <constraint firstItem="Q6u-bG-nBH" firstAttribute="width" secondItem="lNe-eM-q7E" secondAttribute="width" multiplier="1/2" id="8Ks-Ds-0zh"/>
+                                            <constraint firstItem="TW7-b0-FGQ" firstAttribute="width" secondItem="lNe-eM-q7E" secondAttribute="width" id="azF-Mn-dvN"/>
+                                            <constraint firstItem="nZ5-XH-oqj" firstAttribute="height" secondItem="lNe-eM-q7E" secondAttribute="height" multiplier="4/5" id="fDo-gd-z6M"/>
+                                            <constraint firstItem="Q6u-bG-nBH" firstAttribute="height" secondItem="lNe-eM-q7E" secondAttribute="height" multiplier="1/2" id="p7x-Mj-iDL"/>
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="jeN-Qa-occ"/>
+                                                <exclude reference="fDo-gd-z6M"/>
+                                                <exclude reference="8Ks-Ds-0zh"/>
+                                                <exclude reference="p7x-Mj-iDL"/>
                                             </mask>
                                         </variation>
-                                    </view>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Globe" translatesAutoresizingMaskIntoConstraints="NO" id="nZ5-XH-oqj">
-                                        <rect key="frame" x="182" y="275" width="237" height="237"/>
-                                        <animations/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="nZ5-XH-oqj" secondAttribute="height" multiplier="1:1" id="ec3-XR-BUV"/>
-                                        </constraints>
-                                    </imageView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ivs-vJ-jj3">
-                                        <rect key="frame" x="0.0" y="512" width="600" height="10"/>
-                                        <animations/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="EJn-Hf-vJV"/>
-                                            <constraint firstAttribute="height" constant="20" id="OgJ-nL-dZU"/>
-                                        </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="EJn-Hf-vJV"/>
-                                                <exclude reference="OgJ-nL-dZU"/>
-                                            </mask>
-                                        </variation>
-                                    </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q6u-bG-nBH">
-                                        <rect key="frame" x="228" y="522" width="144" height="48"/>
-                                        <animations/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="Q6u-bG-nBH" secondAttribute="height" multiplier="3:1" id="kD0-WK-ryf"/>
-                                            <constraint firstAttribute="height" constant="80" id="lP9-Mw-vIN"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <state key="normal" title="Find Me"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="lP9-Mw-vIN"/>
-                                            </mask>
-                                        </variation>
-                                        <connections>
-                                            <action selector="pressedFindLocation:" destination="C43-Ch-gDp" eventType="touchUpInside" id="ioz-hu-yca"/>
-                                        </connections>
-                                    </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pEw-D3-iMj">
-                                        <rect key="frame" x="0.0" y="570" width="600" height="10"/>
-                                        <animations/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="10" id="aWU-WA-l7H"/>
-                                        </constraints>
-                                    </view>
+                                    </stackView>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="ivs-vJ-jj3" firstAttribute="width" secondItem="uAF-DL-iAW" secondAttribute="width" id="5TB-Qj-zqv"/>
-                                    <constraint firstItem="pEw-D3-iMj" firstAttribute="width" secondItem="uAF-DL-iAW" secondAttribute="width" id="6Rz-Yi-6Fz"/>
-                                    <constraint firstItem="Q6u-bG-nBH" firstAttribute="height" secondItem="nV0-Wa-XHB" secondAttribute="height" multiplier="1/3" id="9V0-iC-Luv"/>
                                     <constraint firstItem="Cge-Gt-3qK" firstAttribute="width" secondItem="uAF-DL-iAW" secondAttribute="width" id="PQx-Ha-Inc"/>
                                     <constraint firstItem="nV0-Wa-XHB" firstAttribute="width" secondItem="uAF-DL-iAW" secondAttribute="width" id="RR0-Xv-r1A"/>
-                                    <constraint firstItem="ivs-vJ-jj3" firstAttribute="height" secondItem="pEw-D3-iMj" secondAttribute="height" id="RpN-ih-641"/>
-                                    <constraint firstItem="h9t-e2-ebs" firstAttribute="height" secondItem="pEw-D3-iMj" secondAttribute="height" id="Wqx-XF-0Us"/>
-                                    <constraint firstItem="h9t-e2-ebs" firstAttribute="width" secondItem="uAF-DL-iAW" secondAttribute="width" id="i9C-rc-Ja1"/>
-                                    <constraint firstItem="pEw-D3-iMj" firstAttribute="top" secondItem="uAF-DL-iAW" secondAttribute="top" constant="560" id="ip9-5e-nnL"/>
-                                    <constraint firstItem="nZ5-XH-oqj" firstAttribute="height" secondItem="uAF-DL-iAW" secondAttribute="height" multiplier="1/2" id="lSM-hD-w6W"/>
-                                    <constraint firstItem="Q6u-bG-nBH" firstAttribute="top" secondItem="nZ5-XH-oqj" secondAttribute="bottom" constant="20" id="pfS-iZ-lNh"/>
-                                    <constraint firstItem="pEw-D3-iMj" firstAttribute="leading" secondItem="ivs-vJ-jj3" secondAttribute="leading" id="qwl-oV-5LL"/>
-                                    <constraint firstItem="Q6u-bG-nBH" firstAttribute="width" secondItem="uAF-DL-iAW" secondAttribute="width" multiplier="1/2" id="uaQ-XT-nik"/>
+                                    <constraint firstItem="lNe-eM-q7E" firstAttribute="width" secondItem="uAF-DL-iAW" secondAttribute="width" id="uX8-X2-vn5"/>
                                     <constraint firstItem="nV0-Wa-XHB" firstAttribute="height" secondItem="uAF-DL-iAW" secondAttribute="height" multiplier="1/4" id="xuS-lg-NOM"/>
-                                    <constraint firstItem="nZ5-XH-oqj" firstAttribute="width" secondItem="uAF-DL-iAW" secondAttribute="width" multiplier="1/2" id="z8G-ko-DRO"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="lSM-hD-w6W"/>
-                                        <exclude reference="z8G-ko-DRO"/>
-                                        <exclude reference="pfS-iZ-lNh"/>
-                                        <exclude reference="uaQ-XT-nik"/>
-                                        <exclude reference="ip9-5e-nnL"/>
-                                        <exclude reference="qwl-oV-5LL"/>
-                                    </mask>
-                                </variation>
                             </stackView>
                         </subviews>
                         <animations/>
@@ -420,6 +402,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="findMeButton" destination="Q6u-bG-nBH" id="pUJ-P2-9UD"/>
                         <outlet property="locationTextView" destination="nV0-Wa-XHB" id="08Q-C9-yEz"/>
                         <outlet property="stackView" destination="uAF-DL-iAW" id="Hwi-x6-ap0"/>
                     </connections>

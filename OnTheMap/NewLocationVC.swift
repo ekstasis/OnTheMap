@@ -13,12 +13,17 @@ class NewLocationVC: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var locationTextView: UITextView!
+    @IBOutlet weak var findMeButton: UIButton!
     
     var locationText: String!
     var locationCoords: CLLocationCoordinate2D!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        findMeButton.titleLabel!.numberOfLines = 1
+        findMeButton.titleLabel!.adjustsFontSizeToFitWidth = true
+        findMeButton.titleLabel!.lineBreakMode = NSLineBreakMode.ByClipping
+        
     }
     
     @IBAction func pressedFindLocation(sender: UIButton) {
