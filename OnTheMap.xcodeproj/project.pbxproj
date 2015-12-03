@@ -78,7 +78,6 @@
 		326EDA0C1BEFC26A00004D53 /* OnTheMap */ = {
 			isa = PBXGroup;
 			children = (
-				326EDA0D1BEFC26A00004D53 /* AppDelegate.swift */,
 				326EDA131BEFC26A00004D53 /* Main.storyboard */,
 				3219025C1BF1135000005F00 /* OTMClient.swift */,
 				32C1A3B71C0124520069A362 /* OTMClient Convenience Methods.swift */,
@@ -87,6 +86,7 @@
 				326B27E01C0274B100923A6E /* Annotation.swift */,
 				321902601BF25D9B00005F00 /* StudentLocation.swift */,
 				32CAD4941C0BFB610059FE0B /* Refreshable Protocol.swift */,
+				326EDA0D1BEFC26A00004D53 /* AppDelegate.swift */,
 				326EDA161BEFC26A00004D53 /* Assets.xcassets */,
 				326EDA181BEFC26A00004D53 /* LaunchScreen.storyboard */,
 				326EDA1B1BEFC26A00004D53 /* Info.plist */,
