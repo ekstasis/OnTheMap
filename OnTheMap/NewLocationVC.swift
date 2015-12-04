@@ -20,6 +20,7 @@ class NewLocationVC: UIViewController, UITextViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationTextView.delegate = self
         findMeButton.titleLabel!.numberOfLines = 1
         findMeButton.titleLabel!.adjustsFontSizeToFitWidth = true
         findMeButton.titleLabel!.lineBreakMode = NSLineBreakMode.ByClipping
@@ -28,9 +29,31 @@ class NewLocationVC: UIViewController, UITextViewDelegate {
     
     @IBAction func pressedFindLocation(sender: UIButton) {
         locationText = locationTextView.text
-        // geocode it
-        // present error if necessary
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(locationText) { placeMarks, error in
+            guard error == nil else {
+                print(error)
+                return
+            }
+            if let coordinates = placeMarks?[0].location?.coordinate {
+                self.locationCoords = coordinates
+            }
+            print(self.locationCoords)
+        }
         // present next views
         stackView.hidden = true
+    }
+    
+    /*
+     * UITextViewDelegate
+    */
+    func textViewDidBeginEditing(textView: UITextView) {
+        locationTextView.text = ""
+    }
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            locationTextView.resignFirstResponder()
+        }
+        return true
     }
 }
