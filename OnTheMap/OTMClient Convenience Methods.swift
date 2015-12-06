@@ -7,13 +7,14 @@
 //
 
 import Foundation
+import MapKit
 
 /*
 * Convenience Methods Extension
 */
 extension OTMClient {
     
-    func createSession(userInfo: [String: String], loginHandler: (userID: String?, sessionID: String?, error: NSError?) -> Void) {
+    func createSession(userInfo: [String: String], loginHandler: (userID: String?, sessionID: String?, errorString: String?) -> Void) {
         
         let body = ["udacity": userInfo]
         
@@ -24,20 +25,21 @@ extension OTMClient {
         request.HTTPBody = httpBody
         request.HTTPMethod = "POST"
         
-        taskForMethod(request) { JSONData, error in
+        taskForMethod(request) { JSONData, errorString in
             
-            guard error == nil else {
+            guard errorString == nil else {
                 // deal with error here instead?
-                loginHandler(userID: nil, sessionID: nil, error: error)
+                loginHandler(userID: nil, sessionID: nil, errorString: errorString)
                 return
             }
             
-            let sessionJSON = self.JSONObjectFromNSData(self.trimUdacityData(JSONData!))
+            var sessionJSON: AnyObject
             
-            
-            // JSONObjectFromNSData returns NSError instead of NSDictionary if it fails
-            if let error = sessionJSON as? NSError {
-                loginHandler(userID: nil, sessionID: nil, error: error)
+            do {
+                sessionJSON = try self.JSONObjectFromNSData(self.trimUdacityData(JSONData!))
+            } catch let error as NSError {
+                loginHandler(userID: nil, sessionID: nil, errorString: error.localizedDescription)
+                return
             }
             
             let resultDictionary = sessionJSON as? NSDictionary
@@ -47,20 +49,17 @@ extension OTMClient {
             let sessionID = session?["id"] as? String
             
             guard accountKey != nil && sessionID != nil else {
-                let message = [NSLocalizedDescriptionKey: "Failed to retrieve user and session from JSON"]
-                let error = NSError(domain: "createSession:", code: 1, userInfo: message)
-                
-                loginHandler(userID: nil, sessionID: nil, error: error)
+                loginHandler(userID: nil, sessionID: nil, errorString: "Failed to retrieve user and session from JSON")
                 return
             }
             
             // user/account var names need to be normalized
-            loginHandler(userID: accountKey, sessionID: sessionID, error: nil)
+            loginHandler(userID: accountKey, sessionID: sessionID, errorString: nil)
         }
         
     }
     
-    func getUserName(loginHandler: (first: String?, last: String?, error: NSError?) -> Void) {
+    func getUserName(loginHandler: (first: String?, last: String?, errorString: String?) -> Void) {
         
         /*
         * Create URLRequest
@@ -73,40 +72,37 @@ extension OTMClient {
         /*
         * taskForMethod Completion Handler
         */
-        taskForMethod(request) { JSONData, error in
+        taskForMethod(request) { JSONData, errorString in
             
-            guard error == nil else {
+            guard errorString == nil else {
                 // deal with error here instead?
-                loginHandler(first: nil, last: nil, error: error)
+                loginHandler(first: nil, last: nil, errorString: errorString)
+                return
+            }
+            var userJSON: AnyObject
+            
+            do {
+                userJSON = try self.JSONObjectFromNSData(self.trimUdacityData(JSONData!))
+            } catch let error as NSError {
+                loginHandler(first: nil, last: nil, errorString: error.localizedDescription)
                 return
             }
             
-            // Udacity JSON needs first 5 bytes trimmed
-            let sessionJSON = self.JSONObjectFromNSData(self.trimUdacityData(JSONData!))
-            
-            // JSONObjectFromNSData returns NSError instead of NSDictionary if it fails
-            if let error = sessionJSON as? NSError {
-                loginHandler(first: nil, last: nil, error: error)
-            }
-            
-            let resultDictionary = sessionJSON as? NSDictionary
+            let resultDictionary = userJSON as? NSDictionary
             let userDetails = resultDictionary?["user"] as? NSDictionary
             let firstName = userDetails?["first_name"] as? String
             let lastName = userDetails?["last_name"] as? String
             
             guard firstName != nil && lastName != nil else {
-                let message = [NSLocalizedDescriptionKey: "Failed to retrieve user and session from JSON"]
-                let error = NSError(domain: "createSession:", code: 1, userInfo: message)
-                
-                loginHandler(first: nil, last: nil, error: error)
+                loginHandler(first: nil, last: nil, errorString: "Failed to retrieve user's name")
                 return
             }
             
-            loginHandler(first: firstName, last: lastName, error: nil)
+            loginHandler(first: firstName, last: lastName, errorString: nil)
         }
     }
     
-    func getLocations(completion: (locations: [String: AnyObject]?, error: NSError?) -> Void) {
+    func getLocations(completion: (locations: [String: AnyObject]?, errorString: String?) -> Void) {
         
         /*
         * Create URLRequest
@@ -118,41 +114,110 @@ extension OTMClient {
         request.addValue(ParseInfo.ApplicationID.rawValue, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(ParseInfo.APIKey.rawValue, forHTTPHeaderField: "X-Parse-REST-API-Key")
         
-        taskForMethod(request) { locationsJSON, error in
+        taskForMethod(request) { locationsJSON, errorString in
             
-            guard error == nil else {
-                completion(locations: nil, error: error)
+            guard errorString == nil else {
+                completion(locations: nil, errorString: errorString)
                 return
             }
             
-            // JSONObjectFromNSData returns NSError instead of NSDictionary if it fails
-            if locationsJSON is NSError {
-                completion(locations: nil, error: nil)
+            var studentLocations: [String: AnyObject]?
+            
+            do {
+                studentLocations = try self.JSONObjectFromNSData(locationsJSON!) as? [String : AnyObject]
+            } catch let error as NSError {
+                completion(locations: nil, errorString: error.localizedDescription)
+                return
             }
             
-            let studentLocations = self.JSONObjectFromNSData(locationsJSON!)
+            guard studentLocations != nil else {
+                completion(locations: nil, errorString: "The JSON returned from server is not a dictionary")
+                return
+            }
             
-            if let locations = studentLocations as? [String: AnyObject] {
-                completion(locations: locations, error: nil)
+            completion(locations: studentLocations, errorString: nil)
+        }
+    }
+    
+    func postLocation(locationInfo: [String : AnyObject], objectID: String?, completion: (errorString: String?) -> Void) {
+        /*
+        * Create URLRequest
+        */
+        let url = ParseMethods.Locations.rawValue + (objectID != nil ? "/\(objectID!)" : "")
+        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        request.HTTPMethod = objectID == nil ? "POST" : "PUT"
+        request.addValue(ParseInfo.ApplicationID.rawValue, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(ParseInfo.APIKey.rawValue, forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(locationInfo, options: .PrettyPrinted)
+        
+        taskForMethod(request) { data, errorString in
+            guard errorString == nil else {
+                completion(errorString: errorString)
+                return
+            }
+            var object : [String : AnyObject]?
+            do {
+                object = try self.JSONObjectFromNSData(data!) as? [String : AnyObject]
+            } catch {
+                completion(errorString: "There was an error posting the location.")
+                return
+            }
+            if object != nil {
+                completion(errorString: nil)
             } else {
-                let message = [NSLocalizedDescriptionKey: "Student locations JSON is invalid"]
-                let error = NSError(domain: "OTMClient.getLocations: ", code: 1, userInfo: message)
-                
-                completion(locations: nil, error: error)
+                completion(errorString: "There was an error posting the location.")
             }
         }
     }
     
-    func JSONObjectFromNSData(data: NSData) -> AnyObject? {
+    func checkForPreviousSubmission(completion: (objectID: String?, errorString: String?) -> Void) {
+        /*
+        * Create URLRequest
+        */
+        let url = ParseMethods.Locations.rawValue + "?where=%7B%22uniqueKey%22%3A%22\(accountKey!)%22%7D"
         
-        var parsedResult: AnyObject?
+        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        request.HTTPMethod = "GET"
+        request.addValue(ParseInfo.ApplicationID.rawValue, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(ParseInfo.APIKey.rawValue, forHTTPHeaderField: "X-Parse-REST-API-Key")
+        
+        taskForMethod(request) { previousSubmissionJSON, errorString in
+            
+            guard errorString == nil else {
+                completion(objectID: nil, errorString: errorString)
+                return
+            }
+            
+            var previousSubmission: AnyObject
+            
+            do {
+                previousSubmission = try self.JSONObjectFromNSData(previousSubmissionJSON!)
+            } catch let error as NSError {
+                completion(objectID: nil, errorString: error.localizedDescription)
+                return
+            }
+            let results = (previousSubmission as? [String : AnyObject])?["results"] as? [[String : AnyObject]]
+            guard results != nil else {
+                completion(objectID: nil, errorString: "Invalid JSON while querying previous submission")
+                return
+            }
+            if results!.isEmpty {
+                completion(objectID: nil, errorString: nil)
+            } else {
+                let ID = results![0]["objectId"] as? String
+                completion(objectID: ID, errorString: nil)
+            }
+        }
+    }
+    
+    func JSONObjectFromNSData(data: NSData) throws -> AnyObject {
+        
+        var parsedResult: AnyObject
         
         do {
             parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
         } catch {
-            let userInfo = [NSLocalizedDescriptionKey: "Couldn't create JSON Object with data: \(data)"]
-            let error = NSError(domain: "JSONObjectFromNSData", code: 1, userInfo: userInfo)
-            return error
+            throw error
         }
         
         return parsedResult

@@ -26,20 +26,31 @@ class OTMClient {
         return SharedInstance.sharedInstance
     }
     
-    func update(completion: (error: NSError?) -> Void) {
-        getLocations() { locations, error in
-            guard error == nil else {
-                completion(error: error)
+    func update(completion: (errorString: String?) -> Void) {
+        
+        getLocations() { locations, errorString in
+            
+            guard errorString == nil else {
+                completion(errorString: errorString)
                 return
             }
-            //// variable names
-            self.studentLocations = StudentInformation.arrayFromJSON(locations!)
-            print(self.studentLocations[0].fullName + ": " + self.studentLocations[0].updatedAt)
-            completion(error: nil)
+            
+            StudentInformation.arrayFromJSON(locations!) { studentLocations, errorString in
+                guard errorString == nil else {
+                    completion(errorString: errorString)
+                    return
+                }
+                
+                self.studentLocations = studentLocations!
+                
+                print(self.studentLocations[0].fullName + ": " + self.studentLocations[0].updatedAt)
+            
+                completion(errorString: nil)
+            }
         }
     }
     
-    func taskForMethod(request: NSMutableURLRequest, handler: (JSONData: NSData?, error: NSError?) -> Void) {
+    func taskForMethod(request: NSMutableURLRequest, handler: (JSONData: NSData?, errorString: String?) -> Void) {
         
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -48,19 +59,19 @@ class OTMClient {
             
             guard error == nil else {
                 // deal with error here?
-                handler(JSONData: nil, error: error)
+                handler(JSONData: nil, errorString: error!.localizedDescription)
                 return
             }
             
             let status = (response as? NSHTTPURLResponse)?.statusCode
             
             guard let code = status where code >= 200 && code <= 299 else {
-                print("HTTP Response Error:  \(status)")
+                handler(JSONData: nil, errorString: "Server responded:  \(status)")
                 return
             }
             
             if let data = data {
-                handler(JSONData: data, error: nil)
+                handler(JSONData: data, errorString: nil)
             }
         }
         

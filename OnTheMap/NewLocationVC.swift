@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate, MKMapViewDelegate {
+class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var locationStack: UIStackView!
     @IBOutlet weak var locationTextView: UITextView!
@@ -22,14 +22,13 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate, 
     
     var locationText = String()
     var locationCoords = CLLocationCoordinate2D()
-    var url = String()
+    var url: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         locationTextView.delegate = self
         enterWebsiteTextField.delegate = self
-        userLocationMap.delegate = self
         
         locationStack.hidden = false
         webSiteStack.hidden = true
@@ -59,6 +58,8 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate, 
             let annotation = MKPointAnnotation()
             annotation.coordinate = self.locationCoords
             self.userLocationMap.addAnnotation(annotation)
+            
+            // zoom in a bit
             self.userLocationMap.setCenterCoordinate(self.locationCoords, animated: true)
         }
         
@@ -68,8 +69,42 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate, 
         submitButton.hidden = false
     }
     
+    @IBAction func submitButton(sender: UIButton) {
+        let client = OTMClient.sharedInstance()
+        // does the user already have a location on server?
+        // if so present alert
+        
+        client.checkForPreviousSubmission { objectID, errorString in
+            guard errorString == nil else {
+                print(errorString)
+                return
+            }
+            if let _ = objectID {
+                // present alert and if user cancels, return
+            }
+            
+            let locationInfo : [String : AnyObject] = [
+                "uniqueKey" : client.accountKey!,
+                "firstName" : client.firstName!,
+                "lastName" : client.lastName!,
+                "mapString" : self.locationText,
+                "mediaURL" : self.url,
+                "latitude" : self.locationCoords.latitude,
+                "longitude" : self.locationCoords.longitude
+            ]
+            
+            client.postLocation(locationInfo, objectID: objectID) { errorString in
+                guard errorString == nil else {
+                    print(errorString)
+                    return
+                }
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
+    }
+    
     /*
-     * UITextViewDelegate
+    * UITextViewDelegate
     */
     func textViewDidBeginEditing(textView: UITextView) {
         locationTextView.text = ""
@@ -82,12 +117,13 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate, 
         return true
     }
     
-    /* 
+    /*
     * UITextFieldDelegate
     */
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         //////////// validate text
         url = textField.text!
+        textField.resignFirstResponder()
         return true
     }
 }

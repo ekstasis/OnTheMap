@@ -21,6 +21,7 @@ struct StudentInformation {
     
     var fullName: String { return "\(firstName) \(lastName)" }
     
+    /////// FAILABLE
     init(location: [String: AnyObject]) {
         createdAt = location["createdAt"] as! String
         firstName = location["firstName"] as! String
@@ -33,12 +34,15 @@ struct StudentInformation {
         updatedAt = location["updatedAt"] as! String
     }
     
-    static func arrayFromJSON(json: [String: AnyObject]) -> [StudentInformation] {
+    static func arrayFromJSON(json: [String: AnyObject], completion: (locationsResult: [StudentInformation]?, errorString: String?) -> Void) {
         var studentLocations = [StudentInformation]()
-        let locations = json["results"] as! [[String: AnyObject]]
-        for location in locations {
-            studentLocations.append(StudentInformation(location: location))
+        if let locations = json["results"] as? [[String: AnyObject]] {
+            for location in locations {
+                studentLocations.append(StudentInformation(location: location))
+            }
+            completion(locationsResult: studentLocations, errorString: nil)
+        } else {
+            completion(locationsResult: nil, errorString: "An error occurred while parsing location data")
         }
-        return studentLocations
     }
 }

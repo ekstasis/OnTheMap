@@ -31,33 +31,33 @@ class LogInVC: UIViewController {
         // temporary auto-login
         let userInfo = ["username": "straightstory@gmail.com", "password": "ratsoup"]
         
-        client.createSession(userInfo) { userID, sessionID, error in
+        client.createSession(userInfo) { userID, sessionID, errorString in
             
-            guard error == nil else {
-                print(error)
+            guard errorString == nil else {
+                print(errorString)
                 return
             }
             
-            self.client.sessionID = sessionID!
-            self.client.accountKey = userID!
+            self.client.sessionID = sessionID
+            self.client.accountKey = userID
             print(self.client.sessionID)
             print(self.client.accountKey)
             
-            self.client.getUserName() { first, last, error in
+            self.client.getUserName() { first, last, errorString in
                 
-                guard error == nil else {
-                    print(error)
+                guard errorString == nil else {
+                    print(errorString)
                     return
                 }
                 
-                self.client.firstName = first!
-                self.client.lastName = last!
+                self.client.firstName = first
+                self.client.lastName = last
                 print("First: \(self.client.firstName!) - Last: \(self.client.lastName!)")
                 
-                self.client.update() { error in
+                self.client.update() { errorString in
                     
-                    guard error == nil else {
-                        print(error)
+                    guard errorString == nil else {
+                        print(errorString)
                         return
                     }
                     
