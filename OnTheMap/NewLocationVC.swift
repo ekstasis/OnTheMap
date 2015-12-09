@@ -20,6 +20,8 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     @IBOutlet weak var enterWebsiteTextField: UITextField!
     @IBOutlet weak var userLocationMap: MKMapView!
     
+    @IBOutlet weak var cancelButton: UIButton!
+    
     var locationText = String()
     var locationCoords = CLLocationCoordinate2D()
     var url: String!
@@ -33,6 +35,8 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         locationStack.hidden = false
         webSiteStack.hidden = true
         submitButton.hidden = true
+        
+//        cancelButton.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
     }
     
     @IBAction func pressedFindLocation(sender: UIButton) {
@@ -67,6 +71,7 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         locationStack.hidden = true
         webSiteStack.hidden = false
         submitButton.hidden = false
+        cancelButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     }
     
     @IBAction func submitButton(sender: UIButton) {
@@ -103,6 +108,10 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         }
     }
     
+    @IBAction func userCancelled(sender: UIButton) {
+        print("cancel")
+        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
     /*
     * UITextViewDelegate
     */

@@ -43,10 +43,25 @@
             </objects>
             <point key="canvasLocation" x="-1381" y="-99"/>
         </scene>
-        <!--Item-->
+        <!--Tab Bar Controller-->
+        <scene sceneID="tCD-Uj-ICx">
+            <objects>
+                <tabBarController id="Svh-cC-Del" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="MVi-oh-43L">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5QN-Vn-OON" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-680" y="-124"/>
+        </scene>
+        <!--Table View-->
         <scene sceneID="8x4-Am-Vpt">
             <objects>
-                <tableViewController id="lSh-GQ-Swj" customClass="TableVC" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Table View" id="lSh-GQ-Swj" customClass="TableVC" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="iMC-07-Ywf">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -87,11 +102,11 @@
                             <outlet property="delegate" destination="lSh-GQ-Swj" id="Gd4-To-1MQ"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Item" image="list" id="mDM-49-qBS"/>
+                    <tabBarItem key="tabBarItem" title="List" image="list" id="mDM-49-qBS"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AEI-R6-v8u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1381" y="1308"/>
+            <point key="canvasLocation" x="-1297" y="1366"/>
         </scene>
         <!--Log In-->
         <scene sceneID="YHx-XR-2sn">
@@ -251,7 +266,6 @@
             <objects>
                 <tabBarController title="On The Map" id="49e-Tb-3d3" customClass="OnTheMapTabBarController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="R7l-LS-95v"/>
-                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -279,84 +293,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8R1-Jl-bZH" userLabel="Enter Website Stack">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Share A Website Here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kGi-yP-Bdj">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="97"/>
-                                        <animations/>
-                                        <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="f6m-aL-jVh"/>
-                                            <constraint firstAttribute="height" constant="60" id="oaT-ze-ImG"/>
-                                        </constraints>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="f6m-aL-jVh"/>
-                                                <exclude reference="oaT-ze-ImG"/>
-                                            </mask>
-                                        </variation>
-                                    </textField>
-                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="UM1-lz-v66">
-                                        <rect key="frame" x="0.0" y="97" width="600" height="483"/>
-                                        <animations/>
-                                    </mapView>
-                                </subviews>
-                                <animations/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="kGi-yP-Bdj" firstAttribute="width" secondItem="8R1-Jl-bZH" secondAttribute="width" id="X0x-4O-JrY"/>
-                                    <constraint firstItem="UM1-lz-v66" firstAttribute="width" secondItem="8R1-Jl-bZH" secondAttribute="width" id="cjD-6f-Ntk"/>
-                                    <constraint firstItem="kGi-yP-Bdj" firstAttribute="height" secondItem="UM1-lz-v66" secondAttribute="height" multiplier="1/5" id="i9p-nu-IiL"/>
-                                </constraints>
-                            </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4QA-PE-ah8" userLabel="Submit">
-                                <rect key="frame" x="245" y="560" width="110" height="30"/>
-                                <animations/>
-                                <color key="backgroundColor" white="1" alpha="0.34970366379310347" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="110" id="8ie-Ky-Mid"/>
-                                    <constraint firstAttribute="width" secondItem="4QA-PE-ah8" secondAttribute="height" multiplier="3:1" id="OcA-4G-vC2"/>
-                                    <constraint firstAttribute="height" constant="30" id="b1U-m0-bRT"/>
-                                    <constraint firstAttribute="height" constant="80" id="t8B-td-DNb"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <size key="titleShadowOffset" width="3" height="2"/>
-                                <state key="normal" title="Submit"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="OcA-4G-vC2"/>
-                                        <exclude reference="t8B-td-DNb"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <action selector="submitButton:" destination="C43-Ch-gDp" eventType="touchUpInside" id="aL2-mE-pV9"/>
-                                </connections>
-                            </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="uAF-DL-iAW" userLabel="Location Stack">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where Are You Studying Today?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cge-Gt-3qK">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="120"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
                                         <animations/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="120" id="abP-m9-9zB"/>
+                                            <constraint firstAttribute="height" constant="200" id="abP-m9-9zB"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter Your Location Here" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nV0-Wa-XHB">
-                                        <rect key="frame" x="0.0" y="120" width="600" height="145"/>
+                                        <rect key="frame" x="0.0" y="200" width="600" height="145"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -364,7 +316,7 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
                                     </textView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lNe-eM-q7E">
-                                        <rect key="frame" x="0.0" y="265" width="600" height="315"/>
+                                        <rect key="frame" x="0.0" y="345" width="600" height="235"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fat-bi-8MZ">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="5"/>
@@ -375,7 +327,7 @@
                                                 </constraints>
                                             </view>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Globe" translatesAutoresizingMaskIntoConstraints="NO" id="nZ5-XH-oqj">
-                                                <rect key="frame" x="163" y="5" width="275" height="275"/>
+                                                <rect key="frame" x="203" y="5" width="195" height="195"/>
                                                 <animations/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
@@ -383,7 +335,7 @@
                                                 </constraints>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q6u-bG-nBH">
-                                                <rect key="frame" x="250" y="280" width="100" height="25"/>
+                                                <rect key="frame" x="250" y="200" width="100" height="25"/>
                                                 <animations/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
@@ -411,7 +363,7 @@
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TW7-b0-FGQ">
-                                                <rect key="frame" x="0.0" y="305" width="600" height="10"/>
+                                                <rect key="frame" x="0.0" y="225" width="600" height="10"/>
                                                 <animations/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
@@ -445,6 +397,76 @@
                                     <constraint firstItem="nV0-Wa-XHB" firstAttribute="height" secondItem="uAF-DL-iAW" secondAttribute="height" multiplier="1/4" id="xuS-lg-NOM"/>
                                 </constraints>
                             </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8R1-Jl-bZH" userLabel="Enter Website Stack">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Share A Website Here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kGi-yP-Bdj">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="145"/>
+                                        <animations/>
+                                        <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="f6m-aL-jVh"/>
+                                            <constraint firstAttribute="height" constant="60" id="oaT-ze-ImG"/>
+                                        </constraints>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="f6m-aL-jVh"/>
+                                                <exclude reference="oaT-ze-ImG"/>
+                                            </mask>
+                                        </variation>
+                                    </textField>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="UM1-lz-v66">
+                                        <rect key="frame" x="0.0" y="145" width="600" height="435"/>
+                                        <animations/>
+                                    </mapView>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="kGi-yP-Bdj" firstAttribute="width" secondItem="8R1-Jl-bZH" secondAttribute="width" id="X0x-4O-JrY"/>
+                                    <constraint firstItem="UM1-lz-v66" firstAttribute="width" secondItem="8R1-Jl-bZH" secondAttribute="width" id="cjD-6f-Ntk"/>
+                                    <constraint firstItem="kGi-yP-Bdj" firstAttribute="height" secondItem="UM1-lz-v66" secondAttribute="height" multiplier="1/3" id="i9p-nu-IiL"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4QA-PE-ah8" userLabel="Submit">
+                                <rect key="frame" x="245" y="560" width="110" height="30"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="0.34970366379310347" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="110" id="8ie-Ky-Mid"/>
+                                    <constraint firstAttribute="width" secondItem="4QA-PE-ah8" secondAttribute="height" multiplier="3:1" id="OcA-4G-vC2"/>
+                                    <constraint firstAttribute="height" constant="30" id="b1U-m0-bRT"/>
+                                    <constraint firstAttribute="height" constant="80" id="t8B-td-DNb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <size key="titleShadowOffset" width="3" height="2"/>
+                                <state key="normal" title="Submit"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="OcA-4G-vC2"/>
+                                        <exclude reference="t8B-td-DNb"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="submitButton:" destination="C43-Ch-gDp" eventType="touchUpInside" id="aL2-mE-pV9"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="20e-Cp-eH3">
+                                <rect key="frame" x="532" y="20" width="48" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="userCancelled:" destination="C43-Ch-gDp" eventType="touchUpInside" id="ZkW-7f-bdp"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -453,12 +475,14 @@
                             <constraint firstItem="8R1-Jl-bZH" firstAttribute="top" secondItem="gI7-yu-DxL" secondAttribute="bottom" id="3HN-7E-Qg7"/>
                             <constraint firstItem="uAF-DL-iAW" firstAttribute="centerY" secondItem="6zO-75-qBG" secondAttribute="centerY" id="5BW-62-yb5"/>
                             <constraint firstItem="Hlm-gh-0RY" firstAttribute="top" secondItem="4QA-PE-ah8" secondAttribute="bottom" constant="10" id="KPl-Q8-nF5"/>
+                            <constraint firstItem="20e-Cp-eH3" firstAttribute="trailing" secondItem="6zO-75-qBG" secondAttribute="trailingMargin" id="L6E-Ue-iLh"/>
                             <constraint firstItem="Hlm-gh-0RY" firstAttribute="top" secondItem="8R1-Jl-bZH" secondAttribute="bottom" id="T9b-lt-SWy"/>
                             <constraint firstItem="4QA-PE-ah8" firstAttribute="centerX" secondItem="6zO-75-qBG" secondAttribute="centerX" id="UPH-5Q-XEE"/>
                             <constraint firstItem="uAF-DL-iAW" firstAttribute="top" secondItem="gI7-yu-DxL" secondAttribute="bottom" id="XH9-xN-wR0"/>
                             <constraint firstItem="Hlm-gh-0RY" firstAttribute="top" secondItem="uAF-DL-iAW" secondAttribute="bottom" id="YQM-mS-TNQ"/>
                             <constraint firstItem="uAF-DL-iAW" firstAttribute="width" secondItem="6zO-75-qBG" secondAttribute="width" id="bnq-SY-CKS"/>
                             <constraint firstItem="uAF-DL-iAW" firstAttribute="top" secondItem="gI7-yu-DxL" secondAttribute="bottom" id="c83-Xq-GYi"/>
+                            <constraint firstItem="20e-Cp-eH3" firstAttribute="top" secondItem="gI7-yu-DxL" secondAttribute="bottom" id="uv1-YO-v3w"/>
                             <constraint firstItem="8R1-Jl-bZH" firstAttribute="centerX" secondItem="6zO-75-qBG" secondAttribute="centerX" id="ygq-fI-GcB"/>
                             <constraint firstItem="uAF-DL-iAW" firstAttribute="centerX" secondItem="6zO-75-qBG" secondAttribute="centerX" id="zOR-OZ-ZgI"/>
                         </constraints>
@@ -470,6 +494,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="cancelButton" destination="20e-Cp-eH3" id="bqt-xm-cDQ"/>
                         <outlet property="enterWebsiteTextField" destination="kGi-yP-Bdj" id="OQd-0k-epC"/>
                         <outlet property="findMeButton" destination="Q6u-bG-nBH" id="pUJ-P2-9UD"/>
                         <outlet property="locationStack" destination="uAF-DL-iAW" id="aL4-4N-cw4"/>
