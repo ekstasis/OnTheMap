@@ -59,6 +59,41 @@ extension OTMClient {
         
     }
     
+    //////// error handling needed here
+    func deleteSession(handler: (errorString: String?) -> Void) {
+        
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
+        request.HTTPMethod = "DELETE"
+        
+        var xsrfCookie: NSHTTPCookie? = nil
+        let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+        for cookie in sharedCookieStorage.cookies! {
+            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+        }
+        if let xsrfCookie = xsrfCookie {
+            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+        }
+        
+        taskForMethod(request) { data, errorString in
+            
+            guard errorString == nil else {
+                handler(errorString: errorString)
+                return
+            }
+            
+            var sessionDeletionJSON: AnyObject
+            
+            do {
+                sessionDeletionJSON = try self.JSONObjectFromNSData(self.trimUdacityData(data!))
+            } catch let error as NSError {
+                handler(errorString: error.localizedDescription)
+                return
+            }
+            print(sessionDeletionJSON)
+            handler(errorString: nil)
+        }
+    }
+    
     func getUserName(loginHandler: (first: String?, last: String?, errorString: String?) -> Void) {
         
         /*

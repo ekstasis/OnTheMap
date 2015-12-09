@@ -23,8 +23,13 @@ class OnTheMapTabBarController: UITabBarController {
     }
 
     func logOut() {
-        navigationController?.dismissViewControllerAnimated(true, completion: nil)
-        print("Log Out")
+        
+        let client = OTMClient.sharedInstance()
+        client.deleteSession() { errorString in
+            print(errorString)
+        }
+        
+//        navigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func newLocation() {
