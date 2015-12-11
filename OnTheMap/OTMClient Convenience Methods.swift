@@ -68,7 +68,9 @@ extension OTMClient {
         var xsrfCookie: NSHTTPCookie? = nil
         let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
         for cookie in sharedCookieStorage.cookies! {
-            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+            if cookie.name == "XSRF-TOKEN" {
+                xsrfCookie = cookie
+            }
         }
         if let xsrfCookie = xsrfCookie {
             request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
@@ -155,7 +157,7 @@ extension OTMClient {
                 completion(locations: nil, errorString: errorString)
                 return
             }
-            
+           
             var studentLocations: [String: AnyObject]?
             
             do {

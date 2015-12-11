@@ -29,7 +29,7 @@ class OnTheMapTabBarController: UITabBarController {
             print(errorString)
         }
         
-//        navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        navigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func newLocation() {

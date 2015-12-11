@@ -54,16 +54,16 @@ class LogInVC: UIViewController {
                 self.client.lastName = last
                 print("First: \(self.client.firstName!) - Last: \(self.client.lastName!)")
                 
-                self.client.update() { errorString in
-                    
-                    guard errorString == nil else {
-                        print(errorString)
-                        return
-                    }
-                    
+//                self.client.update() { errorString in
+//                    
+//                    guard errorString == nil else {
+//                        print(errorString)
+//                        return
+//                    }
+                
                     let navVC = self.storyboard?.instantiateViewControllerWithIdentifier("Main Nav VC") as! UINavigationController
                     self.presentViewController(navVC, animated: true, completion: nil)
-                }
+//                }
             }
         }
     }
