@@ -36,6 +36,7 @@ class MapVC: UIViewController, MKMapViewDelegate, Refreshable {
         for student in client.studentLocations {
             let newAnnotation = Annotation(firstName: student.firstName, lastName: student.lastName, latitude: student.latitude, longitude: student.longitude, url: student.mediaURL)
             
+///////            print("\(student.latitude) : \(newAnnotation.coordinate)")
             dispatch_async(dispatch_get_main_queue()) {
                 self.map.addAnnotation(newAnnotation)
             }

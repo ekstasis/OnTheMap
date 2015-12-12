@@ -172,6 +172,8 @@ extension OTMClient {
                 return
             }
             
+            print(studentLocations)
+            
             completion(locations: studentLocations, errorString: nil)
         }
     }
