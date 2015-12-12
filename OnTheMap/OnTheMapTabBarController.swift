@@ -12,7 +12,7 @@ class OnTheMapTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         let logoutButton = UIBarButtonItem(title: "Log Out", style: .Plain, target: self, action: "logOut")
         navigationItem.setLeftBarButtonItem(logoutButton, animated: true)
         

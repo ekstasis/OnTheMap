@@ -41,20 +41,6 @@
             </objects>
             <point key="canvasLocation" x="-1381" y="-99"/>
         </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="tCD-Uj-ICx">
-            <objects>
-                <tabBarController id="Svh-cC-Del" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="MVi-oh-43L">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </tabBar>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5QN-Vn-OON" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-680" y="-124"/>
-        </scene>
         <!--Table View-->
         <scene sceneID="8x4-Am-Vpt">
             <objects>
@@ -236,6 +222,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="bCP-UP-9Z3">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="49e-Tb-3d3" kind="relationship" relationship="rootViewController" id="wVG-1E-T4e"/>
                     </connections>
