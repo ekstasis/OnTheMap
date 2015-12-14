@@ -29,7 +29,7 @@ class LogInVC: UIViewController {
         //        }
         
         // temporary auto-login
-        let userInfo = ["username": "straightstory@gmail.com", "password": "ratsoup"]
+        let userInfo = ["username": "straightstory@gmail.com", "password": ""]
         
         client.createSession(userInfo) { userID, sessionID, errorString in
             
