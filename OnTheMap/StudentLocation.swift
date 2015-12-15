@@ -38,7 +38,6 @@ struct StudentInformation {
         var studentLocations = [StudentInformation]()
         if let locations = json["results"] as? [[String: AnyObject]] {
             for location in locations {
-                print("Lat: \(location["latitude"]) - Lon: \(location["longitude"])")
                 studentLocations.append(StudentInformation(location: location))
             }
             completion(locationsResult: studentLocations, errorString: nil)

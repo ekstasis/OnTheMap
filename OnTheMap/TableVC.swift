@@ -16,14 +16,23 @@ class TableVC: UITableViewController, Refreshable {
         super.viewDidLoad()
         tableView.delegate = self
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        refresh()
+    }
 
     func refresh() {
-        client.update() { error in
+        client.update() { locations, error in
             guard error == nil else {
                 print(error)
                 return
             }
-            self.tableView.reloadData()
+            print(locations![0])
+            dispatch_async(dispatch_get_main_queue())
+                {
+                self.tableView.reloadData()
+            }
         }
     }
 

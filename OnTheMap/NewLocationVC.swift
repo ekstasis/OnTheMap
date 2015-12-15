@@ -26,6 +26,8 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     var locationCoords = CLLocationCoordinate2D()
     var url: String!
     
+    let client = OTMClient.sharedInstance()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,13 +49,9 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         
         geocoder.geocodeAddressString(locationText) { placeMarks, error in
             
-            guard error == nil else {
-                print(error)
-                return
-            }
-            
             guard let coordinates = placeMarks?[0].location?.coordinate else {
-                print("There was a problem with the coordinates!")
+                self.client.showAlert("Unable to locate \"\(self.locationText)\".", controller: self)
+                self.locationTextView.text = "Enter Your Location Here"
                 return
             }
             
@@ -65,13 +63,15 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
             
             // zoom in a bit
             self.userLocationMap.setCenterCoordinate(self.locationCoords, animated: true)
+            
+            // present next views
+            self.locationStack.hidden = true
+            self.webSiteStack.hidden = false
+            self.submitButton.hidden = false
+            self.cancelButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         }
         
-        // present next views
-        locationStack.hidden = true
-        webSiteStack.hidden = false
-        submitButton.hidden = false
-        cancelButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        
     }
     
     @IBAction func submitButton(sender: UIButton) {
@@ -109,7 +109,6 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     }
     
     @IBAction func userCancelled(sender: UIButton) {
-        print("cancel")
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     /*

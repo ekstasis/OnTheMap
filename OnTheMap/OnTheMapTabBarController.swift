@@ -21,6 +21,7 @@ class OnTheMapTabBarController: UITabBarController {
         let rightButtons = [refreshButton, newLocationButton]
         navigationItem.setRightBarButtonItems(rightButtons, animated: true)
         
+        // For some reason List icon not working unless set programatically
         let tableItem = UITabBarItem(title: "List", image: UIImage.init(named: "list"), tag: 0)
         let tableView = self.viewControllers![1] as! TableVC
         tableView.tabBarItem = tableItem

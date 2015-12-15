@@ -19,6 +19,10 @@ class MapVC: UIViewController, MKMapViewDelegate, Refreshable {
     override func viewDidLoad() {
         super.viewDidLoad()
         map.delegate = self
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         refresh()
     }
     
@@ -26,21 +30,21 @@ class MapVC: UIViewController, MKMapViewDelegate, Refreshable {
         
         map.removeAnnotations(map.annotations)
         
-        client.update() { error in
+        client.update() { studentLocations, error in
             guard error == nil else {
-                print(error)
+                self.client.showAlert(error!, controller: self)
                 return
             }
-        }
+            for student in studentLocations! {
+                let newAnnotation = Annotation(firstName: student.firstName, lastName: student.lastName, latitude: student.latitude, longitude: student.longitude, url: student.mediaURL)
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.map.addAnnotation(newAnnotation)
+                }
+            }     }
         
-        for student in client.studentLocations {
-            let newAnnotation = Annotation(firstName: student.firstName, lastName: student.lastName, latitude: student.latitude, longitude: student.longitude, url: student.mediaURL)
-            
-///////            print("\(student.latitude) : \(newAnnotation.coordinate)")
-            dispatch_async(dispatch_get_main_queue()) {
-                self.map.addAnnotation(newAnnotation)
-            }
-        }
+        
+        
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -82,10 +86,8 @@ class MapVC: UIViewController, MKMapViewDelegate, Refreshable {
             subTitle = http + "://" + subTitle
         }
         
-        print(subTitle)
-        
         guard client.launchSafariWithURLString(subTitle) else {
-//            //////////////  DEAL WITH ERROR
+            //            //////////////  DEAL WITH ERROR
             print("Error opening URL:  \"\(subTitle)\"")
             return
         }

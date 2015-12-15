@@ -28,7 +28,6 @@ extension OTMClient {
         taskForMethod(request) { JSONData, errorString in
             
             guard errorString == nil else {
-                // deal with error here instead?
                 loginHandler(userID: nil, sessionID: nil, errorString: errorString)
                 return
             }
@@ -39,6 +38,11 @@ extension OTMClient {
                 sessionJSON = try self.JSONObjectFromNSData(self.trimUdacityData(JSONData!))
             } catch let error as NSError {
                 loginHandler(userID: nil, sessionID: nil, errorString: error.localizedDescription)
+                return
+            }
+            
+            if let error = sessionJSON["error"] as? String {
+                loginHandler(userID: nil, sessionID: nil, errorString: error)
                 return
             }
             
@@ -83,15 +87,14 @@ extension OTMClient {
                 return
             }
             
-            var sessionDeletionJSON: AnyObject
+//            var sessionDeletionJSON: AnyObject
             
             do {
-                sessionDeletionJSON = try self.JSONObjectFromNSData(self.trimUdacityData(data!))
+                try self.JSONObjectFromNSData(self.trimUdacityData(data!))
             } catch let error as NSError {
                 handler(errorString: error.localizedDescription)
                 return
             }
-            print(sessionDeletionJSON)
             handler(errorString: nil)
         }
     }
@@ -167,12 +170,15 @@ extension OTMClient {
                 return
             }
             
+            guard studentLocations!["error"] == nil else {
+                completion(locations: nil, errorString: "Unable to retrieve locations.")
+                return
+            }
+            
             guard studentLocations != nil else {
                 completion(locations: nil, errorString: "The JSON returned from server is not a dictionary")
                 return
             }
-            
-            print(studentLocations)
             
             completion(locations: studentLocations, errorString: nil)
         }
@@ -259,10 +265,22 @@ extension OTMClient {
             throw error
         }
         
+        print(parsedResult)
+        
         return parsedResult
     }
     
     func trimUdacityData(data: NSData) -> NSData {
         return data.subdataWithRange(NSMakeRange(5, data.length))
+    }
+    
+    func showAlert(errorString: String, controller: UIViewController) {
+        
+        let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .Alert)
+        let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alert.addAction(action)
+        dispatch_async(dispatch_get_main_queue()) {
+            controller.presentViewController(alert, animated: true, completion: nil)
+        }
     }
 }
