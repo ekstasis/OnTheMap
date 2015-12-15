@@ -29,7 +29,7 @@ class LogInVC: UIViewController {
         //        }
         
         // temporary auto-login
-        let userInfo = ["username": "straightstory@gmail.com", "password": ""]
+        let userInfo = ["username": "straightstory@gmail.com", "password": "ratsoup"]
         
         client.createSession(userInfo) { userID, sessionID, errorString in
             
@@ -62,6 +62,7 @@ class LogInVC: UIViewController {
 //                    }
                 
                     let navVC = self.storyboard?.instantiateViewControllerWithIdentifier("Main Nav VC") as! UINavigationController
+//                let tabBarVC = self.storyboard?.instantiateViewControllerWithIdentifier("TabBarController") as! OnTheMapTabBarController
                     self.presentViewController(navVC, animated: true, completion: nil)
 //                }
             }

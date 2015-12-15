@@ -20,6 +20,10 @@ class OnTheMapTabBarController: UITabBarController {
         let refreshButton = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refresh")
         let rightButtons = [refreshButton, newLocationButton]
         navigationItem.setRightBarButtonItems(rightButtons, animated: true)
+        
+        let tableItem = UITabBarItem(title: "List", image: UIImage.init(named: "list"), tag: 0)
+        let tableView = self.viewControllers![1] as! TableVC
+        tableView.tabBarItem = tableItem
     }
 
     func logOut() {

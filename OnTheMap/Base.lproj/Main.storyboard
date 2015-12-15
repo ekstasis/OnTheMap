@@ -237,7 +237,7 @@
         <!--On The Map-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController title="On The Map" id="49e-Tb-3d3" customClass="OnTheMapTabBarController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" title="On The Map" id="49e-Tb-3d3" customClass="OnTheMapTabBarController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="R7l-LS-95v"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
