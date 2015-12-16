@@ -32,7 +32,7 @@ class MapVC: UIViewController, MKMapViewDelegate, Refreshable {
         
         client.update() { studentLocations, error in
             guard error == nil else {
-                self.client.showAlert(error!, controller: self)
+                self.showAlert(error!)
                 return
             }
             for student in studentLocations! {
@@ -91,6 +91,14 @@ class MapVC: UIViewController, MKMapViewDelegate, Refreshable {
             print("Error opening URL:  \"\(subTitle)\"")
             return
         }
+    }
+    
+    func showAlert(errorString: String) {
+        
+        let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .Alert)
+        let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alert.addAction(action)
+        presentViewController(alert, animated: true, completion: nil)
     }
 }
 

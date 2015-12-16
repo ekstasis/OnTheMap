@@ -11,13 +11,20 @@ import UIKit
 class LogInVC: UIViewController {
     
     let client = OTMClient.sharedInstance()
+    var indicator: UIActivityIndicatorView!
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
     override func viewDidLoad() {
-        ///// necessary?
-        loginButton(UIButton.init())
+        super.viewDidLoad()
+        indicator = UIActivityIndicatorView(frame: view.frame)
+        indicator.activityIndicatorViewStyle = .WhiteLarge
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopActivityIndicator()
     }
     
     @IBAction func loginButton(sender: UIButton) {
@@ -35,8 +42,10 @@ class LogInVC: UIViewController {
             
             guard errorString == nil else {
                 
-                self.client.showAlert(errorString!, controller: self)
-               
+//                dispatch_async(dispatch_get_main_queue()) {
+                    self.showAlert(errorString!)
+                                        self.stopActivityIndicator()
+//                }
                 return
             }
             
@@ -46,7 +55,13 @@ class LogInVC: UIViewController {
             self.client.getUserName() { first, last, errorString in
                 
                 guard errorString == nil else {
-                    self.client.showAlert(errorString!, controller: self)
+                    
+//                    dispatch_async(dispatch_get_main_queue()) {
+                    
+                        self.showAlert(errorString!)
+                                            self.stopActivityIndicator()
+//                    }
+                    
                     return
                 }
                 
@@ -57,5 +72,38 @@ class LogInVC: UIViewController {
                 self.presentViewController(navVC, animated: true, completion: nil)
             }
         }
+        startActivityIndicator()
+    }
+    
+    func startActivityIndicator() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.indicator.startAnimating()
+            for subView in self.view.subviews {
+                subView.alpha = 0.3
+            }
+            self.view.addSubview(self.indicator)
+        }
+    }
+    
+    func stopActivityIndicator() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.indicator.stopAnimating()
+            for subView in self.view.subviews {
+                subView.alpha = 1.0
+            }
+            self.indicator.removeFromSuperview()
+        }
+    }
+    
+    func showAlert(errorString: String) {
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .Alert)
+            let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            
+                alert.addAction(action)
+                self.presentViewController(alert, animated: true, completion: nil)
+        }
+        self.stopActivityIndicator()
     }
 }

@@ -50,7 +50,7 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         geocoder.geocodeAddressString(locationText) { placeMarks, error in
             
             guard let coordinates = placeMarks?[0].location?.coordinate else {
-                self.client.showAlert("Unable to locate \"\(self.locationText)\".", controller: self)
+                self.showAlert("Unable to locate \"\(self.locationText)\".")
                 self.locationTextView.text = "Enter Your Location Here"
                 return
             }
@@ -133,5 +133,13 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         url = textField.text!
         textField.resignFirstResponder()
         return true
+    }
+    
+    func showAlert(errorString: String) {
+        
+        let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .Alert)
+        let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alert.addAction(action)
+        presentViewController(alert, animated: true, completion: nil)
     }
 }
