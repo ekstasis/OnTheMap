@@ -61,8 +61,8 @@ class OTMClient {
                 return
             }
             
-//            let status = (response as? NSHTTPURLResponse)?.statusCode
-//            
+            let status = (response as? NSHTTPURLResponse)?.statusCode
+//
 //            guard let code = status where code >= 200 && code <= 299 else {
 //                handler(JSONData: nil, errorString: "Server responded:  \(status)")
 //                return

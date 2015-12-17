@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LogInVC: UIViewController {
+class LogInVC: UIViewController, UITextFieldDelegate {
     
     let client = OTMClient.sharedInstance()
     var indicator: UIActivityIndicatorView!
@@ -20,6 +20,9 @@ class LogInVC: UIViewController {
         super.viewDidLoad()
         indicator = UIActivityIndicatorView(frame: view.frame)
         indicator.activityIndicatorViewStyle = .WhiteLarge
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -28,24 +31,22 @@ class LogInVC: UIViewController {
     }
     
     @IBAction func loginButton(sender: UIButton) {
-        
-        //        guard let user = emailTextField.text, pass = passwordTextField.text else {
-        //
-        //            // show alert dialog
-        //            // return
-        //        }
-        
+        let user = emailTextField.text!, pass = passwordTextField.text!
+        guard !user.isEmpty && !pass.isEmpty else {
+            showAlert("Please enter an email address and password.")
+            return
+        }
         // temporary auto-login
-        let userInfo = ["username": "straightstory@gmail.com", "password": "ratsoup"]
+        let userInfo = ["username": user, "password": pass]
         
         client.createSession(userInfo) { userID, sessionID, errorString in
             
             guard errorString == nil else {
                 
-//                dispatch_async(dispatch_get_main_queue()) {
-                    self.showAlert(errorString!)
-                                        self.stopActivityIndicator()
-//                }
+                //                dispatch_async(dispatch_get_main_queue()) {
+                self.showAlert(errorString!)
+                self.stopActivityIndicator()
+                //                }
                 return
             }
             
@@ -56,11 +57,11 @@ class LogInVC: UIViewController {
                 
                 guard errorString == nil else {
                     
-//                    dispatch_async(dispatch_get_main_queue()) {
+                    //                    dispatch_async(dispatch_get_main_queue()) {
                     
-                        self.showAlert(errorString!)
-                                            self.stopActivityIndicator()
-//                    }
+                    self.showAlert(errorString!)
+                    self.stopActivityIndicator()
+                    //                    }
                     
                     return
                 }
@@ -101,9 +102,13 @@ class LogInVC: UIViewController {
             let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .Alert)
             let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
             
-                alert.addAction(action)
-                self.presentViewController(alert, animated: true, completion: nil)
+            alert.addAction(action)
+            self.presentViewController(alert, animated: true, completion: nil)
         }
         self.stopActivityIndicator()
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        return textField.resignFirstResponder()
     }
 }

@@ -28,9 +28,7 @@ class TableVC: UITableViewController, Refreshable {
                 print(error)
                 return
             }
-            print(locations![0])
-            dispatch_async(dispatch_get_main_queue())
-                {
+            dispatch_async(dispatch_get_main_queue()) {
                 self.tableView.reloadData()
             }
         }
