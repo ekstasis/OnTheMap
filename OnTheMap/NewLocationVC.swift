@@ -37,8 +37,6 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         locationStack.hidden = false
         webSiteStack.hidden = true
         submitButton.hidden = true
-        
-//        cancelButton.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
     }
     
     @IBAction func pressedFindLocation(sender: UIButton) {
@@ -76,16 +74,18 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     
     @IBAction func submitButton(sender: UIButton) {
         let client = OTMClient.sharedInstance()
-        // does the user already have a location on server?
-        // if so present alert
         
         client.checkForPreviousSubmission { objectID, errorString in
             guard errorString == nil else {
-                print(errorString)
+                self.showAlert(errorString!)
                 return
             }
             if let _ = objectID {
-                // present alert and if user cancels, return
+                let message = "You have submitted a location previously.  Would you like to create a new one?"
+                    let alert = UIAlertController(title: "Previous Submission", message: message, preferredStyle: .Alert)
+                    let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                    alert.addAction(action)
+                    self.presentViewController(alert, animated: true, completion: nil)
             }
             
             let locationInfo : [String : AnyObject] = [
@@ -100,7 +100,7 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
             
             client.postLocation(locationInfo, objectID: objectID) { errorString in
                 guard errorString == nil else {
-                    print(errorString)
+                    self.showAlert(errorString!)
                     return
                 }
                 self.dismissViewControllerAnimated(true, completion: nil)
@@ -111,6 +111,7 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     @IBAction func userCancelled(sender: UIButton) {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
+    
     /*
     * UITextViewDelegate
     */
@@ -129,7 +130,7 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     * UITextFieldDelegate
     */
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        //////////// validate text
+        
         url = textField.text!
         textField.resignFirstResponder()
         return true

@@ -23,9 +23,9 @@ class TableVC: UITableViewController, Refreshable {
     }
 
     func refresh() {
-        client.update() { locations, error in
-            guard error == nil else {
-                print(error)
+        client.update() { locations, errorString in
+            guard errorString == nil else {
+                self.showAlert(errorString!)
                 return
             }
             dispatch_async(dispatch_get_main_queue()) {
@@ -57,17 +57,23 @@ class TableVC: UITableViewController, Refreshable {
         
         var url = client.studentLocations[indexPath.row].mediaURL
         
-        // URL must have http(s)://
-        let http = "http"
-        let range = url.rangeOfString(http, options: NSStringCompareOptions.CaseInsensitiveSearch)
-        if range == nil {
-            url = http + "://" + url
-        }
+//        // URL must have http(s)://
+//        let http = "http"
+//        let range = url.rangeOfString(http, options: NSStringCompareOptions.CaseInsensitiveSearch)
+//        if range == nil {
+//            url = http + "://" + url
+//        }
         
         guard client.launchSafariWithURLString(url) else {
-            //            //////////////  DEAL WITH ERROR
-            print("Error opening URL:  \"\(url)\"")
+            showAlert("Error opening URL:  \"\(url)\"")
             return
         }
+    }
+    
+    func showAlert(errorString: String) {
+        let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .Alert)
+        let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alert.addAction(action)
+        presentViewController(alert, animated: true, completion: nil)
     }
 }

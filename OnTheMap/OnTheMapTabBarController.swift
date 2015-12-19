@@ -28,10 +28,9 @@ class OnTheMapTabBarController: UITabBarController {
     }
 
     func logOut() {
-        
         let client = OTMClient.sharedInstance()
         client.deleteSession() { errorString in
-            print(errorString)
+            self.showAlert(errorString!)
         }
         
         navigationController?.dismissViewControllerAnimated(true, completion: nil)
@@ -42,8 +41,16 @@ class OnTheMapTabBarController: UITabBarController {
         presentViewController(newLocationVC, animated: true, completion: nil)
     }
     
+    // Map and List views have their own ways of refreshing, conform to Refreshable protocol
     func refresh() {
         let displayedTab = viewControllers![selectedIndex] as! Refreshable
         displayedTab.refresh()
+    }
+    
+    func showAlert(errorString: String) {
+        let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .Alert)
+        let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alert.addAction(action)
+        presentViewController(alert, animated: true, completion: nil)
     }
 }
