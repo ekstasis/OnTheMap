@@ -24,7 +24,7 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     
     var locationText = String()
     var locationCoords = CLLocationCoordinate2D()
-    var url: String!
+    var url = String()
     
     let client = OTMClient.sharedInstance()
     
@@ -42,6 +42,11 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     @IBAction func pressedFindLocation(sender: UIButton) {
         
         locationText = locationTextView.text
+        
+        guard locationText != "Enter Your Location Here" else {
+            showAlert("Please enter a location.")
+            return
+        }
         
         let geocoder = CLGeocoder()
         
@@ -73,6 +78,12 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     }
     
     @IBAction func submitButton(sender: UIButton) {
+        
+        guard !url.isEmpty else {
+            showAlert("Please enter a website.")
+            return
+        }
+        
         let client = OTMClient.sharedInstance()
         
         client.checkForPreviousSubmission { objectID, errorString in
@@ -80,32 +91,51 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
                 self.showAlert(errorString!)
                 return
             }
-            if let _ = objectID {
+            if let objectID = objectID {
                 let message = "You have submitted a location previously.  Would you like to create a new one?"
-                    let alert = UIAlertController(title: "Previous Submission", message: message, preferredStyle: .Alert)
-                    let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                    alert.addAction(action)
+                let alert = UIAlertController(title: "Previous Submission", message: message, preferredStyle: .Alert)
+                
+                let okAction = UIAlertAction(title: "OK", style: .Default) { action in
+                    self.submitLocation(objectID)
+                }
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+                
+                alert.addAction(okAction)
+                alert.addAction(cancelAction)
+                
+                dispatch_sync(dispatch_get_main_queue()) {
                     self.presentViewController(alert, animated: true, completion: nil)
+                }
+            } else {
+                self.submitLocation(nil)
             }
             
-            let locationInfo : [String : AnyObject] = [
-                "uniqueKey" : client.accountKey!,
-                "firstName" : client.firstName!,
-                "lastName" : client.lastName!,
-                "mapString" : self.locationText,
-                "mediaURL" : self.url,
-                "latitude" : self.locationCoords.latitude,
-                "longitude" : self.locationCoords.longitude
-            ]
-            
-            client.postLocation(locationInfo, objectID: objectID) { errorString in
-                guard errorString == nil else {
-                    self.showAlert(errorString!)
-                    return
-                }
+        }
+    }
+    
+    func submitLocation(objectID: String?) {
+        
+        let locationInfo : [String : AnyObject] = [
+            "uniqueKey" : client.accountKey!,
+            "firstName" : client.firstName!,
+            "lastName" : client.lastName!,
+            "mapString" : locationText,
+            "mediaURL" : url,
+            "latitude" : locationCoords.latitude,
+            "longitude" : locationCoords.longitude
+        ]
+        
+        client.postLocation(locationInfo, objectID: objectID) { errorString in
+            guard errorString == nil else {
+                self.showAlert(errorString!)
+                return
+            }
+            dispatch_async(dispatch_get_main_queue()) {
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
         }
+        
     }
     
     @IBAction func userCancelled(sender: UIButton) {
@@ -141,6 +171,8 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .Alert)
         let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alert.addAction(action)
-        presentViewController(alert, animated: true, completion: nil)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
     }
 }

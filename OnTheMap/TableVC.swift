@@ -57,16 +57,19 @@ class TableVC: UITableViewController, Refreshable {
         
         var url = client.studentLocations[indexPath.row].mediaURL
         
-//        // URL must have http(s)://
-//        let http = "http"
-//        let range = url.rangeOfString(http, options: NSStringCompareOptions.CaseInsensitiveSearch)
-//        if range == nil {
-//            url = http + "://" + url
-//        }
+        // URL must have http(s)://
+        let http = "http"
+        let range = url.rangeOfString(http, options: NSStringCompareOptions.CaseInsensitiveSearch)
+        if range == nil {
+            url = http + "://" + url
+        }
         
-        guard client.launchSafariWithURLString(url) else {
-            showAlert("Error opening URL:  \"\(url)\"")
-            return
+//        guard client.launchSafariWithURLString(url) else {
+//            showAlert("Error opening URL:  \"\(url)\"")
+//            return
+//        }
+        dispatch_async(dispatch_get_main_queue()) {
+        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
         }
     }
     

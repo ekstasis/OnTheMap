@@ -30,7 +30,9 @@ class OnTheMapTabBarController: UITabBarController {
     func logOut() {
         let client = OTMClient.sharedInstance()
         client.deleteSession() { errorString in
-            self.showAlert(errorString!)
+            if let error = errorString {
+                self.showAlert(error)
+            }
         }
         
         navigationController?.dismissViewControllerAnimated(true, completion: nil)

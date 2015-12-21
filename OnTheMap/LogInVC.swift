@@ -33,15 +33,15 @@ class LogInVC: UIViewController, UITextFieldDelegate {
         
         let user = emailTextField.text!, pass = passwordTextField.text!
         
-        guard !user.isEmpty && !pass.isEmpty else {
-            showAlert("Please enter an email address and password.")
-            return
-        }
+//        guard !user.isEmpty && !pass.isEmpty else {
+//            showAlert("Please enter an email address and password.")
+//            return
+//        }
         
-        let userInfo = ["username": user, "password": pass]
+//        let userInfo = ["username": user, "password": pass]
         
         // temporary auto-login
-//        let userInfo = ["username": "straightstory@gmail.com", "password": "ratsoup"]
+        let userInfo = ["username": "straightstory@gmail.com", "password": "ratsoup"]
         
         client.createSession(userInfo) { userID, sessionID, errorString in
             guard errorString == nil else {
@@ -64,7 +64,13 @@ class LogInVC: UIViewController, UITextFieldDelegate {
                 self.client.lastName = last
                 
                 let navVC = self.storyboard?.instantiateViewControllerWithIdentifier("Main Nav VC") as! UINavigationController
-                self.presentViewController(navVC, animated: true, completion: nil)
+                
+                // If navVC not presented on main queue when the keyboard hasn't been dismissed first
+                // causes exception:
+                // UIKeyboardTaskQueue waitUntilAllTasksAreFinished] may only be called from the main thread.
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.presentViewController(navVC, animated: true, completion: nil)
+                }
             }
         }
         startActivityIndicator()
