@@ -28,15 +28,26 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     
     let client = OTMClient.sharedInstance()
     
+    var activityIndicator: UIActivityIndicatorView!
+    
+    /*
+    *   TEST VERSION:  simply hide/unhide locationStack below to produce bug
+    */
     override func viewDidLoad() {
         super.viewDidLoad()
         
         locationTextView.delegate = self
         enterWebsiteTextField.delegate = self
         
-        locationStack.hidden = false
+        locationStack.hidden = false  // set to true to reproduce bug
         webSiteStack.hidden = true
         submitButton.hidden = true
+        
+        activityIndicator = UIActivityIndicatorView(frame: view.frame)
+        activityIndicator.activityIndicatorViewStyle = .WhiteLarge
+        
+        // TEST VERSION:  this doesn't normally go here, of course
+        startActivityIndicator()
     }
     
     @IBAction func pressedFindLocation(sender: UIButton) {
@@ -48,6 +59,8 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
             return
         }
         
+        startActivityIndicator()
+        
         let geocoder = CLGeocoder()
         
         geocoder.geocodeAddressString(locationText) { placeMarks, error in
@@ -55,6 +68,7 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
             guard let coordinates = placeMarks?[0].location?.coordinate else {
                 self.showAlert("Unable to locate \"\(self.locationText)\".")
                 self.locationTextView.text = "Enter Your Location Here"
+                self.stopActivityIndicator()
                 return
             }
             
@@ -72,6 +86,8 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
             self.webSiteStack.hidden = false
             self.submitButton.hidden = false
             self.cancelButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            
+            self.stopActivityIndicator()
         }
         
         
@@ -86,16 +102,22 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         
         let client = OTMClient.sharedInstance()
         
+        self.startActivityIndicator()
+        
         client.checkForPreviousSubmission { objectID, errorString in
             guard errorString == nil else {
+                self.stopActivityIndicator()
                 self.showAlert(errorString!)
                 return
             }
+            
             if let objectID = objectID {
+                self.stopActivityIndicator()
                 let message = "You have submitted a location previously.  Would you like to create a new one?"
                 let alert = UIAlertController(title: "Previous Submission", message: message, preferredStyle: .Alert)
                 
                 let okAction = UIAlertAction(title: "OK", style: .Default) { action in
+                    self.startActivityIndicator()
                     self.submitLocation(objectID)
                 }
                 
@@ -128,9 +150,13 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         
         client.postLocation(locationInfo, objectID: objectID) { errorString in
             guard errorString == nil else {
+                self.stopActivityIndicator()
                 self.showAlert(errorString!)
                 return
             }
+            
+            self.stopActivityIndicator()
+            
             dispatch_async(dispatch_get_main_queue()) {
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
@@ -173,6 +199,28 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         alert.addAction(action)
         dispatch_async(dispatch_get_main_queue()) {
             self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func startActivityIndicator() {
+        dispatch_async(dispatch_get_main_queue()) {
+            for subView in self.view.subviews {
+                subView.alpha = 0.3
+            }
+            self.view.addSubview(self.activityIndicator)
+            self.view.bringSubviewToFront(self.activityIndicator)
+            
+            self.activityIndicator.startAnimating()
+        }
+    }
+    
+    func stopActivityIndicator() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.removeFromSuperview()
+            for subView in self.view.subviews {
+                subView.alpha = 1.0
+            }
         }
     }
 }
