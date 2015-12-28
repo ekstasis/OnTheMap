@@ -30,9 +30,6 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     
     var activityIndicator: UIActivityIndicatorView!
     
-    /*
-    *   TEST VERSION:  simply hide/unhide locationStack below to produce bug
-    */
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,9 +42,6 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         
         activityIndicator = UIActivityIndicatorView(frame: view.frame)
         activityIndicator.activityIndicatorViewStyle = .WhiteLarge
-        
-        // TEST VERSION:  this doesn't normally go here, of course
-        startActivityIndicator()
     }
     
     @IBAction func pressedFindLocation(sender: UIButton) {
