@@ -43,7 +43,7 @@ class LogInVC: UIViewController, UITextFieldDelegate {
         /* 
         * AUTO LOG IN 
         */
-        let userInfo = ["username": "*********", "password": "**********"]
+        let userInfo = ["username": "straightstory@gmail.com", "password": "ratsoup"]
         
         client.createSession(userInfo) { userID, sessionID, errorString in
             guard errorString == nil else {
