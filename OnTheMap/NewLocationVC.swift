@@ -39,12 +39,12 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         locationTextView.delegate = self
         enterWebsiteTextField.delegate = self
         
-        locationStack.hidden = false  // set to true to reproduce bug
+        locationStack.hidden = true  // set to true to reproduce bug
         webSiteStack.hidden = true
         submitButton.hidden = true
         
         activityIndicator = UIActivityIndicatorView(frame: view.frame)
-        activityIndicator.activityIndicatorViewStyle = .WhiteLarge
+        activityIndicator.activityIndicatorViewStyle = .Gray
         
         // TEST VERSION:  this doesn't normally go here, of course
         startActivityIndicator()
