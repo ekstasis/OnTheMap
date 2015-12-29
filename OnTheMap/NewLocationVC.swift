@@ -36,16 +36,17 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         locationTextView.delegate = self
         enterWebsiteTextField.delegate = self
         
-        locationStack.hidden = false  // set to true to reproduce bug
+        locationStack.hidden = false
         webSiteStack.hidden = true
         submitButton.hidden = true
         
         activityIndicator = UIActivityIndicatorView(frame: view.frame)
-        activityIndicator.activityIndicatorViewStyle = .WhiteLarge
+        activityIndicator.activityIndicatorViewStyle = .Gray
     }
     
     @IBAction func pressedFindLocation(sender: UIButton) {
         
+      
         locationText = locationTextView.text
         
         guard locationText != "Enter Your Location Here" else {
@@ -88,12 +89,12 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     }
     
     @IBAction func submitButton(sender: UIButton) {
-        
+      
         guard !url.isEmpty else {
             showAlert("Please enter a website.")
             return
         }
-        
+      
         let client = OTMClient.sharedInstance()
         
         self.startActivityIndicator()
@@ -104,7 +105,7 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
                 self.showAlert(errorString!)
                 return
             }
-            
+          
             if let objectID = objectID {
                 self.stopActivityIndicator()
                 let message = "You have submitted a location previously.  Would you like to create a new one?"
