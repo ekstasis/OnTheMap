@@ -114,13 +114,6 @@
                                     <action selector="loginButton:" destination="UyO-sQ-aD3" eventType="touchUpInside" id="Pec-oc-T1Y"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4cm-Xa-lmm">
-                                <rect key="frame" x="20" y="388" width="560" height="30"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Log in with Facebook">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="User Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jkm-n0-2b4">
                                 <rect key="frame" x="20" y="255" width="560" height="25"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
@@ -172,8 +165,6 @@
                             <constraint firstItem="Qax-II-KkT" firstAttribute="centerX" secondItem="wZT-e1-xhg" secondAttribute="centerX" id="Oo6-gT-0wa"/>
                             <constraint firstItem="jkm-n0-2b4" firstAttribute="centerX" secondItem="wZT-e1-xhg" secondAttribute="centerX" id="P9x-4i-4QK"/>
                             <constraint firstItem="lUp-Ie-kCB" firstAttribute="centerX" secondItem="9TR-RR-gr8" secondAttribute="centerX" id="QKK-TD-1AT"/>
-                            <constraint firstItem="4cm-Xa-lmm" firstAttribute="width" secondItem="wZT-e1-xhg" secondAttribute="width" id="R3j-RD-ecm"/>
-                            <constraint firstItem="4cm-Xa-lmm" firstAttribute="centerX" secondItem="9TR-RR-gr8" secondAttribute="centerX" id="SLj-e6-gjn"/>
                             <constraint firstItem="wZT-e1-xhg" firstAttribute="centerX" secondItem="9TR-RR-gr8" secondAttribute="centerX" id="T0g-f0-7s7"/>
                             <constraint firstItem="Qax-II-KkT" firstAttribute="top" secondItem="ErN-PW-2mW" secondAttribute="bottom" constant="8" id="XVB-nL-uYX"/>
                             <constraint firstItem="wZT-e1-xhg" firstAttribute="width" secondItem="jkm-n0-2b4" secondAttribute="width" id="Zib-jY-n0b"/>
@@ -183,7 +174,6 @@
                             <constraint firstItem="lUp-Ie-kCB" firstAttribute="top" secondItem="hiJ-1I-g0E" secondAttribute="bottom" constant="10" id="gsH-jK-jc7"/>
                             <constraint firstItem="wZT-e1-xhg" firstAttribute="leading" secondItem="9TR-RR-gr8" secondAttribute="leadingMargin" id="hwn-SL-AKe"/>
                             <constraint firstItem="jkm-n0-2b4" firstAttribute="width" secondItem="wZT-e1-xhg" secondAttribute="width" id="iUK-Yt-fqP"/>
-                            <constraint firstItem="4cm-Xa-lmm" firstAttribute="top" secondItem="Qax-II-KkT" secondAttribute="bottom" constant="8" id="ksp-Kh-bNY"/>
                             <constraint firstItem="ErN-PW-2mW" firstAttribute="centerX" secondItem="9TR-RR-gr8" secondAttribute="centerX" id="l75-0f-fqm"/>
                             <constraint firstItem="hiJ-1I-g0E" firstAttribute="width" secondItem="jkm-n0-2b4" secondAttribute="width" multiplier="1:4" id="lAh-2P-0gF"/>
                             <constraint firstItem="wZT-e1-xhg" firstAttribute="top" secondItem="jkm-n0-2b4" secondAttribute="bottom" constant="8" id="ph6-fE-eDu"/>
