@@ -58,10 +58,9 @@ class TableVC: UITableViewController, Refreshable {
         var url = client.studentLocations[indexPath.row].mediaURL
         
         // URL must have http(s)://
-        let http = "http"
-        let range = url.rangeOfString(http, options: NSStringCompareOptions.CaseInsensitiveSearch)
+        let range = url.rangeOfString("http", options: NSStringCompareOptions.CaseInsensitiveSearch)
         if range == nil {
-            url = http + "://" + url
+            url = "http://" + url
         }
         
 //        guard client.launchSafariWithURLString(url) else {
@@ -74,9 +73,11 @@ class TableVC: UITableViewController, Refreshable {
     }
     
     func showAlert(errorString: String) {
+      dispatch_async(dispatch_get_main_queue()) {
         let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .Alert)
         let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alert.addAction(action)
-        presentViewController(alert, animated: true, completion: nil)
+        self.presentViewController(alert, animated: true, completion: nil)
+      }
     }
 }

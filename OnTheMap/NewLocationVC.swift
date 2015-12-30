@@ -73,7 +73,6 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
       annotation.coordinate = self.locationCoords
       self.userLocationMap.addAnnotation(annotation)
       
-      //            self.userLocationMap.setCenterCoordinate(self.locationCoords, animated: true)
       let span = MKCoordinateSpan(latitudeDelta: 0.3, longitudeDelta: 0.3)
       self.userLocationMap.region = MKCoordinateRegion(center: self.locationCoords, span: span)
       
@@ -85,8 +84,6 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
       
       self.stopActivityIndicator()
     }
-    
-    
   }
   
   @IBAction func submitButton(sender: UIButton) {
