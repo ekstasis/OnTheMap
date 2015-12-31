@@ -363,7 +363,7 @@
                                         </constraints>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="URL" enablesReturnKeyAutomatically="YES"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL" enablesReturnKeyAutomatically="YES"/>
                                         <variation key="default">
                                             <mask key="constraints">
                                                 <exclude reference="f6m-aL-jVh"/>

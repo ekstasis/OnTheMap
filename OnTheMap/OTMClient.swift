@@ -76,12 +76,12 @@ class OTMClient {
         task.resume()
     }
     
-    func launchSafariWithURLString(urlString: String) -> Bool {
-        
-        if let url = NSURL(string: urlString) {
-            return UIApplication.sharedApplication().openURL(url)
-        } else {
-            return false
-        }
-    }
+//    func launchSafariWithURLString(urlString: String) -> Bool {
+//        
+//        if let url = NSURL(string: urlString) {
+//            return UIApplication.sharedApplication().openURL(url)
+//        } else {
+//            return false
+//        }
+//    }
 }

@@ -93,6 +93,17 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
       return
     }
     
+    // URL must have http(s)://
+    let range = url.rangeOfString("http", options: NSStringCompareOptions.CaseInsensitiveSearch)
+    if range == nil {
+      url = "http://" + url
+    }
+    
+    guard let website = NSURL(string: url) where UIApplication.sharedApplication().canOpenURL(website) else {
+      self.showAlert("There appears to be something wrong with your URL")
+      return
+    }
+    
     let client = OTMClient.sharedInstance()
     
     self.startActivityIndicator()

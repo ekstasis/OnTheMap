@@ -86,7 +86,7 @@ class MapVC: UIViewController, MKMapViewDelegate, Refreshable {
       subTitle = "http://" + subTitle
     }
     
-    guard client.launchSafariWithURLString(subTitle) else {
+    guard let url = NSURL(string: subTitle) where UIApplication.sharedApplication().openURL(url) else {
       showAlert("Error opening URL:  \"\(subTitle)\"")
       return
     }

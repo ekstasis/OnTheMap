@@ -53,25 +53,28 @@ class TableVC: UITableViewController, Refreshable {
         return cell
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        var url = client.studentLocations[indexPath.row].mediaURL
-        
-        // URL must have http(s)://
-        let range = url.rangeOfString("http", options: NSStringCompareOptions.CaseInsensitiveSearch)
-        if range == nil {
-            url = "http://" + url
-        }
-        
-//        guard client.launchSafariWithURLString(url) else {
-//            showAlert("Error opening URL:  \"\(url)\"")
-//            return
-//        }
-        dispatch_async(dispatch_get_main_queue()) {
-        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
-        }
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    
+    var url = client.studentLocations[indexPath.row].mediaURL
+    
+    // URL must have http(s)://
+    let range = url.rangeOfString("http", options: NSStringCompareOptions.CaseInsensitiveSearch)
+    if range == nil {
+      url = "http://" + url
     }
     
+//    dispatch_async(dispatch_get_main_queue()) {
+//      if !self.client.launchSafariWithURLString(url) {
+//        self.showAlert("Error opening URL:  \"\(url)\"")
+//        return
+//      }
+//    }
+   guard let website = NSURL(string: url) where UIApplication.sharedApplication().openURL(website) else {
+      showAlert("Error opening URL:  \"\(url)\"")
+      return
+    }
+  }
+  
     func showAlert(errorString: String) {
       dispatch_async(dispatch_get_main_queue()) {
         let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .Alert)
