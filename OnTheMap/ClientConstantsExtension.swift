@@ -9,19 +9,19 @@
 import Foundation
 
 extension OTMClient {
-    
-    enum UdacityMethods: String {
-        case Session = "https://www.udacity.com/api/session"
-        case User = "https://www.udacity.com/api/users/" // plus <userID>
-    }
-    
-    enum ParseMethods: String {
-        case Locations = "https://api.parse.com/1/classes/StudentLocation"
-    }
-    
-    enum ParseInfo: String {
-        case ApplicationID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
-        case APIKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
-    }
+  
+  enum UdacityMethods: String {
+    case Session = "https://www.udacity.com/api/session"
+    case User = "https://www.udacity.com/api/users/"
+  }
+  
+  enum ParseMethods: String {
+    case Locations = "https://api.parse.com/1/classes/StudentLocation"
+  }
+  
+  enum ParseInfo: String {
+    case ApplicationID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
+    case APIKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
+  }
 }
         
