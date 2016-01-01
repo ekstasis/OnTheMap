@@ -32,9 +32,10 @@ extension OTMClient {
       }
       
       var sessionJSON: AnyObject
+      let trimmedData = self.trimUdacityData(JSONData!)
       
       do {
-        sessionJSON = try self.JSONObjectFromNSData(self.trimUdacityData(JSONData!))
+        sessionJSON = try NSJSONSerialization.JSONObjectWithData(trimmedData, options: .AllowFragments)
       } catch let error as NSError {
         loginHandler(userID: nil, sessionID: nil, errorString: error.localizedDescription)
         return
@@ -83,8 +84,10 @@ extension OTMClient {
         return
       }
       
+      let trimmedData = self.trimUdacityData(data!)
+      
       do {
-        try self.JSONObjectFromNSData(self.trimUdacityData(data!))
+        try NSJSONSerialization.JSONObjectWithData(trimmedData, options: .AllowFragments)
       } catch let error as NSError {
         handler(errorString: error.localizedDescription)
         return
@@ -109,8 +112,10 @@ extension OTMClient {
       
       var userJSON: AnyObject
       
+      let trimmedData = self.trimUdacityData(JSONData!)
+      
       do {
-        userJSON = try self.JSONObjectFromNSData(self.trimUdacityData(JSONData!))
+        userJSON = try NSJSONSerialization.JSONObjectWithData(trimmedData, options: .AllowFragments)
       } catch let error as NSError {
         loginHandler(first: nil, last: nil, errorString: error.localizedDescription)
         return
@@ -149,7 +154,7 @@ extension OTMClient {
       var studentLocations: [String: AnyObject]?
       
       do {
-        studentLocations = try self.JSONObjectFromNSData(locationsJSON!) as? [String : AnyObject]
+        studentLocations = try NSJSONSerialization.JSONObjectWithData(locationsJSON!, options: .AllowFragments) as? [String : AnyObject]
       } catch let error as NSError {
         completion(locations: nil, errorString: error.localizedDescription)
         return
@@ -191,7 +196,7 @@ extension OTMClient {
       var object : [String : AnyObject]?
       
       do {
-        object = try self.JSONObjectFromNSData(data!) as? [String : AnyObject]
+        object = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as? [String : AnyObject]
       } catch {
         completion(errorString: "The data returned from the server is not a dictionary")
         return
@@ -224,7 +229,7 @@ extension OTMClient {
       var previousSubmission: AnyObject
       
       do {
-        previousSubmission = try self.JSONObjectFromNSData(previousSubmissionJSON!)
+        previousSubmission = try NSJSONSerialization.JSONObjectWithData(previousSubmissionJSON!, options: .AllowFragments)
       } catch let error as NSError {
         completion(objectID: nil, errorString: error.localizedDescription)
         return
@@ -247,18 +252,18 @@ extension OTMClient {
     }
   }
   
-  func JSONObjectFromNSData(data: NSData) throws -> AnyObject {
-    
-    var parsedResult: AnyObject
-    
-    do {
-      parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
-    } catch {
-      throw error
-    }
-    
-    return parsedResult
-  }
+//  func JSONObjectFromNSData(data: NSData) throws -> AnyObject {
+//    
+//    var parsedResult: AnyObject
+//    
+//    do {
+//      parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+//    } catch {
+//      throw error
+//    }
+//    
+//    return parsedResult
+//  }
   
   // Udacity API returns extra 5 characters at the end
   func trimUdacityData(data: NSData) -> NSData {
