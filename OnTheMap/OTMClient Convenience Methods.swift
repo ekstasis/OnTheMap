@@ -252,19 +252,6 @@ extension OTMClient {
     }
   }
   
-//  func JSONObjectFromNSData(data: NSData) throws -> AnyObject {
-//    
-//    var parsedResult: AnyObject
-//    
-//    do {
-//      parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
-//    } catch {
-//      throw error
-//    }
-//    
-//    return parsedResult
-//  }
-  
   // Udacity API returns extra 5 characters at the end
   func trimUdacityData(data: NSData) -> NSData {
     return data.subdataWithRange(NSMakeRange(5, data.length))
