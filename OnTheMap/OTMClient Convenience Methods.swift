@@ -237,6 +237,7 @@ extension OTMClient {
         return
       }
       
+      // Empty results means no previous submission, otherwise return the ID
       if results!.isEmpty {
         completion(objectID: nil, errorString: nil)
       } else {
@@ -259,6 +260,7 @@ extension OTMClient {
     return parsedResult
   }
   
+  // Udacity API returns extra 5 characters at the end
   func trimUdacityData(data: NSData) -> NSData {
     return data.subdataWithRange(NSMakeRange(5, data.length))
   }

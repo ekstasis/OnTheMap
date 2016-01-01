@@ -23,7 +23,6 @@ class MapVC: UIViewController, MKMapViewDelegate, Refreshable {
   
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
-    
     refresh()
   }
   
@@ -60,11 +59,11 @@ class MapVC: UIViewController, MKMapViewDelegate, Refreshable {
       pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "PinView")
       pinView?.canShowCallout = true
     } else {
-      pinView?.annotation = annotation
+      pinView!.annotation = annotation
     }
     
     let detailButton = UIButton(type: UIButtonType.DetailDisclosure)
-    pinView?.rightCalloutAccessoryView = detailButton
+    pinView!.rightCalloutAccessoryView = detailButton
     
     return pinView
   }
@@ -80,12 +79,13 @@ class MapVC: UIViewController, MKMapViewDelegate, Refreshable {
       return
     }
     
-    //         URL must have http(s)://
+    // URL must have http(s)://
     let range = subTitle.rangeOfString("http", options: NSStringCompareOptions.CaseInsensitiveSearch)
     if range == nil {
       subTitle = "http://" + subTitle
     }
     
+    // Check if the valid and if so open it
     guard let url = NSURL(string: subTitle) where UIApplication.sharedApplication().openURL(url) else {
       showAlert("Error opening URL:  \"\(subTitle)\"")
       return

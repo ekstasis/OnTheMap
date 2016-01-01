@@ -9,50 +9,54 @@
 import UIKit
 
 class TableVC: UITableViewController, Refreshable {
-
-    let client = OTMClient.sharedInstance()
+  
+  let client = OTMClient.sharedInstance()
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    tableView.delegate = self
+  }
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    refresh()
+  }
+  
+  func refresh() {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        tableView.delegate = self
+    client.update() { locations, errorString in
+      
+      guard errorString == nil else {
+        self.showAlert(errorString!)
+        return
+      }
+      
+      dispatch_async(dispatch_get_main_queue()) {
+        self.tableView.reloadData()
+      }
     }
+  }
+  
+  // MARK: - Table view data source
+  
+  override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    return 1
+  }
+  
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return client.studentLocations.count
+  }
+  
+  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        refresh()
-    }
-
-    func refresh() {
-        client.update() { locations, errorString in
-            guard errorString == nil else {
-                self.showAlert(errorString!)
-                return
-            }
-            dispatch_async(dispatch_get_main_queue()) {
-                self.tableView.reloadData()
-            }
-        }
-    }
-
-    // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return client.studentLocations.count
-    }
-
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        
-        cell.textLabel!.text = client.studentLocations[indexPath.row].fullName
-        cell.detailTextLabel!.text = client.studentLocations[indexPath.row].mediaURL
-        
-        return cell
-    }
-
+    let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+    
+    cell.textLabel!.text = client.studentLocations[indexPath.row].fullName
+    cell.detailTextLabel!.text = client.studentLocations[indexPath.row].mediaURL
+    
+    return cell
+  }
+  
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     
     var url = client.studentLocations[indexPath.row].mediaURL
@@ -63,24 +67,20 @@ class TableVC: UITableViewController, Refreshable {
       url = "http://" + url
     }
     
-//    dispatch_async(dispatch_get_main_queue()) {
-//      if !self.client.launchSafariWithURLString(url) {
-//        self.showAlert("Error opening URL:  \"\(url)\"")
-//        return
-//      }
-//    }
-   guard let website = NSURL(string: url) where UIApplication.sharedApplication().openURL(website) else {
+    // Check if URL is valid and go ahead an open it
+    guard let website = NSURL(string: url) where UIApplication.sharedApplication().openURL(website) else {
       showAlert("Error opening URL:  \"\(url)\"")
       return
     }
   }
   
-    func showAlert(errorString: String) {
-      dispatch_async(dispatch_get_main_queue()) {
-        let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .Alert)
-        let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        alert.addAction(action)
-        self.presentViewController(alert, animated: true, completion: nil)
-      }
+  func showAlert(errorString: String) {
+    
+    dispatch_async(dispatch_get_main_queue()) {
+      let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .Alert)
+      let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+      alert.addAction(action)
+      self.presentViewController(alert, animated: true, completion: nil)
     }
+  }
 }

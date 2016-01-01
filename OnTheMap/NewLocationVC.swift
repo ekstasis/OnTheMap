@@ -11,6 +11,10 @@ import MapKit
 
 class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
   
+  /*
+  *  This view controller is used both for location and website entry.
+  *  Each mode is handled by a storyboard stack and hidden as appropriate
+  */
   @IBOutlet weak var locationStack: UIStackView!
   @IBOutlet weak var locationTextView: UITextView!
   @IBOutlet weak var findMeButton: UIButton!
@@ -36,6 +40,7 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     locationTextView.delegate = self
     enterWebsiteTextField.delegate = self
     
+    // Hide the website entry stack
     locationStack.hidden = false
     webSiteStack.hidden = true
     submitButton.hidden = true
@@ -45,7 +50,6 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
   }
   
   @IBAction func pressedFindLocation(sender: UIButton) {
-    
     
     locationText = locationTextView.text
     
@@ -60,10 +64,16 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     
     geocoder.geocodeAddressString(locationText) { placeMarks, error in
       
-      guard let coordinates = placeMarks?[0].location?.coordinate else {
-        self.showAlert("Unable to locate \"\(self.locationText)\".")
-        self.locationTextView.text = "Enter Your Location Here"
+      guard error == nil else {
         self.stopActivityIndicator()
+        self.showAlert(error!.localizedDescription)
+        return
+      }
+      
+      // If the geocoder finds multiple locations for some reason, use the first one
+      guard let coordinates = placeMarks?[0].location?.coordinate else {
+        self.stopActivityIndicator()
+        self.showAlert("Unable to locate \"\(self.locationText)\".")
         return
       }
       
@@ -73,10 +83,11 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
       annotation.coordinate = self.locationCoords
       self.userLocationMap.addAnnotation(annotation)
       
+      // Zoom in
       let span = MKCoordinateSpan(latitudeDelta: 0.3, longitudeDelta: 0.3)
       self.userLocationMap.region = MKCoordinateRegion(center: self.locationCoords, span: span)
       
-      // present next views
+      // Switch to website entry mode
       self.locationStack.hidden = true
       self.webSiteStack.hidden = false
       self.submitButton.hidden = false
@@ -99,6 +110,7 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
       url = "http://" + url
     }
     
+    // Checks for valid URL and opens URL
     guard let website = NSURL(string: url) where UIApplication.sharedApplication().canOpenURL(website) else {
       self.showAlert("There appears to be something wrong with your URL")
       return
@@ -115,6 +127,7 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         return
       }
       
+      // Previous submission has custom alert, doesn't use showAlert()
       if let objectID = objectID {
         self.stopActivityIndicator()
         let message = "You have submitted a location previously.  Would you like to create a new one?"
@@ -133,6 +146,7 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         dispatch_sync(dispatch_get_main_queue()) {
           self.presentViewController(alert, animated: true, completion: nil)
         }
+        
       } else {
         self.submitLocation(nil)
       }
@@ -153,6 +167,7 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     ]
     
     client.postLocation(locationInfo, objectID: objectID) { errorString in
+      
       guard errorString == nil else {
         self.stopActivityIndicator()
         self.showAlert(errorString!)
@@ -173,7 +188,7 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
   }
   
   /*
-  * UITextViewDelegate
+  * UITextViewDelegate -- for geocoder entry
   */
   func textViewDidBeginEditing(textView: UITextView) {
     locationTextView.text = ""
@@ -187,7 +202,7 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
   }
   
   /*
-  * UITextFieldDelegate
+  * UITextFieldDelegate -- website entry
   */
   func textFieldShouldReturn(textField: UITextField) -> Bool {
     
@@ -207,10 +222,14 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
   }
   
   func startActivityIndicator() {
+    
     dispatch_async(dispatch_get_main_queue()) {
+      
+      // Dim screen
       for subView in self.view.subviews {
         subView.alpha = 0.3
       }
+      
       self.view.addSubview(self.activityIndicator)
       self.view.bringSubviewToFront(self.activityIndicator)
       
@@ -219,9 +238,12 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
   }
   
   func stopActivityIndicator() {
+    
     dispatch_async(dispatch_get_main_queue()) {
       self.activityIndicator.stopAnimating()
       self.activityIndicator.removeFromSuperview()
+      
+      // Un-dim screen
       for subView in self.view.subviews {
         subView.alpha = 1.0
       }

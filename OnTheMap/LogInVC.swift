@@ -70,9 +70,6 @@ class LogInVC: UIViewController, UITextFieldDelegate {
         
         let navVC = self.storyboard?.instantiateViewControllerWithIdentifier("Main Nav VC") as! UINavigationController
         
-        // If navVC not presented on main queue when the keyboard hasn't been dismissed first
-        // causes exception:
-        // UIKeyboardTaskQueue waitUntilAllTasksAreFinished] may only be called from the main thread.
         dispatch_async(dispatch_get_main_queue()) {
           self.presentViewController(navVC, animated: true, completion: nil)
         }

@@ -98,12 +98,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?  Sign Up." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qax-II-KkT">
-                                <rect key="frame" x="174" y="359" width="253" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ErN-PW-2mW">
                                 <rect key="frame" x="20" y="321" width="560" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.31538867085090339" blue="0.13283622776175752" alpha="1" colorSpace="calibratedRGB"/>
@@ -160,13 +154,10 @@
                             <constraint firstItem="ErN-PW-2mW" firstAttribute="top" secondItem="wZT-e1-xhg" secondAttribute="bottom" constant="8" id="CgJ-Q9-K2k"/>
                             <constraint firstItem="wZT-e1-xhg" firstAttribute="centerY" secondItem="9TR-RR-gr8" secondAttribute="centerY" id="DbA-pB-2im"/>
                             <constraint firstItem="jkm-n0-2b4" firstAttribute="centerX" secondItem="wZT-e1-xhg" secondAttribute="centerX" id="GlE-2O-So8"/>
-                            <constraint firstItem="Qax-II-KkT" firstAttribute="centerX" secondItem="9TR-RR-gr8" secondAttribute="centerX" id="IMG-yJ-BY0"/>
                             <constraint firstItem="wZT-e1-xhg" firstAttribute="top" secondItem="jkm-n0-2b4" secondAttribute="bottom" constant="8" id="NhS-Le-v7m"/>
-                            <constraint firstItem="Qax-II-KkT" firstAttribute="centerX" secondItem="wZT-e1-xhg" secondAttribute="centerX" id="Oo6-gT-0wa"/>
                             <constraint firstItem="jkm-n0-2b4" firstAttribute="centerX" secondItem="wZT-e1-xhg" secondAttribute="centerX" id="P9x-4i-4QK"/>
                             <constraint firstItem="lUp-Ie-kCB" firstAttribute="centerX" secondItem="9TR-RR-gr8" secondAttribute="centerX" id="QKK-TD-1AT"/>
                             <constraint firstItem="wZT-e1-xhg" firstAttribute="centerX" secondItem="9TR-RR-gr8" secondAttribute="centerX" id="T0g-f0-7s7"/>
-                            <constraint firstItem="Qax-II-KkT" firstAttribute="top" secondItem="ErN-PW-2mW" secondAttribute="bottom" constant="8" id="XVB-nL-uYX"/>
                             <constraint firstItem="wZT-e1-xhg" firstAttribute="width" secondItem="jkm-n0-2b4" secondAttribute="width" id="Zib-jY-n0b"/>
                             <constraint firstItem="lUp-Ie-kCB" firstAttribute="top" secondItem="hiJ-1I-g0E" secondAttribute="bottom" constant="25" id="aSg-8h-Vxq"/>
                             <constraint firstItem="ErN-PW-2mW" firstAttribute="width" secondItem="wZT-e1-xhg" secondAttribute="width" id="b3T-ft-pza"/>
@@ -178,7 +169,6 @@
                             <constraint firstItem="hiJ-1I-g0E" firstAttribute="width" secondItem="jkm-n0-2b4" secondAttribute="width" multiplier="1:4" id="lAh-2P-0gF"/>
                             <constraint firstItem="wZT-e1-xhg" firstAttribute="top" secondItem="jkm-n0-2b4" secondAttribute="bottom" constant="8" id="ph6-fE-eDu"/>
                             <constraint firstItem="lUp-Ie-kCB" firstAttribute="width" secondItem="hiJ-1I-g0E" secondAttribute="width" multiplier="1:3" id="tk0-dH-Sr8"/>
-                            <constraint firstItem="Qax-II-KkT" firstAttribute="top" secondItem="wZT-e1-xhg" secondAttribute="bottom" constant="46" id="vl2-oc-m5Q"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -190,8 +180,6 @@
                                 <exclude reference="Zib-jY-n0b"/>
                                 <exclude reference="aSg-8h-Vxq"/>
                                 <exclude reference="tk0-dH-Sr8"/>
-                                <exclude reference="Oo6-gT-0wa"/>
-                                <exclude reference="vl2-oc-m5Q"/>
                             </mask>
                         </variation>
                     </view>
@@ -271,6 +259,7 @@
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter Your Location Here" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nV0-Wa-XHB">
                                         <rect key="frame" x="0.0" y="200" width="600" height="145"/>
                                         <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no" enablesReturnKeyAutomatically="YES"/>
@@ -357,6 +346,7 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter A Website Here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kGi-yP-Bdj">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="145"/>
                                         <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="f6m-aL-jVh"/>
                                             <constraint firstAttribute="height" constant="60" id="oaT-ze-ImG"/>
