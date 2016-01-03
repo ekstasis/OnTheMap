@@ -75,12 +75,7 @@ class TableVC: UITableViewController, Refreshable {
   }
   
   func showAlert(errorString: String) {
-    
-    dispatch_async(dispatch_get_main_queue()) {
-      let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .Alert)
-      let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
-      alert.addAction(action)
-      self.presentViewController(alert, animated: true, completion: nil)
-    }
+    let alert = Alert(controller: self, message: errorString)
+    alert.present()
   }
 }

@@ -33,11 +33,16 @@ class OnTheMapTabBarController: UITabBarController {
     let client = OTMClient.sharedInstance()
     
     client.deleteSession() { errorString in
-      if let error = errorString {
-        self.showAlert(error)
+      
+      guard errorString == nil else {
+        self.showAlert(errorString!)
+        return
+      }
+      
+      dispatch_async(dispatch_get_main_queue()) {
+        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
       }
     }
-    navigationController?.dismissViewControllerAnimated(true, completion: nil)
   }
   
   func newLocation() {
@@ -52,11 +57,7 @@ class OnTheMapTabBarController: UITabBarController {
   }
   
   func showAlert(errorString: String) {
-    dispatch_async(dispatch_get_main_queue()) {
-      let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .Alert)
-      let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
-      alert.addAction(action)
-      self.presentViewController(alert, animated: true, completion: nil)
-    }
+    let alert = Alert(controller: self, message: errorString)
+    alert.present()
   }
 }

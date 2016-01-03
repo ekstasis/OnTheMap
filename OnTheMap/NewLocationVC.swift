@@ -211,15 +211,7 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     return true
   }
   
-  func showAlert(errorString: String) {
-    
-    let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .Alert)
-    let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
-    alert.addAction(action)
-    dispatch_async(dispatch_get_main_queue()) {
-      self.presentViewController(alert, animated: true, completion: nil)
-    }
-  }
+  
   
   func startActivityIndicator() {
     
@@ -248,5 +240,12 @@ class NewLocationVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         subView.alpha = 1.0
       }
     }
+  }
+  
+  func showAlert(errorString: String) {
+    
+    stopActivityIndicator()
+    let alert = Alert(controller: self, message: errorString)
+    alert.present()
   }
 }
