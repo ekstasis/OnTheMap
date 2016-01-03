@@ -1,4 +1,3 @@
-//jesus"i
 //  MapVC.swift
 //  OnTheMap
 //
@@ -8,7 +7,6 @@
 
 import UIKit
 import MapKit
-
 
 class MapVC: UIViewController, MKMapViewDelegate, Refreshable {
   

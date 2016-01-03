@@ -16,7 +16,6 @@ class OTMClient {
   var firstName: String?
   var lastName: String?
   
-  var studentLocations = [StudentInformation]()
   let urlSession = NSURLSession.sharedSession()
   
   class func sharedInstance() -> OTMClient {
@@ -41,7 +40,7 @@ class OTMClient {
           return
         }
         
-        self.studentLocations = studentLocations!
+        StudentInformation.studentLocations = studentLocations!
         
         completion(locations: studentLocations, errorString: nil)
       }

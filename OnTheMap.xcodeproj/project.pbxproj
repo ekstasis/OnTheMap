@@ -11,7 +11,7 @@
 		3219025B1BF10B9D00005F00 /* NewLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3219025A1BF10B9D00005F00 /* NewLocationVC.swift */; };
 		3219025D1BF1135000005F00 /* OTMClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3219025C1BF1135000005F00 /* OTMClient.swift */; };
 		3219025F1BF1137E00005F00 /* ClientConstantsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3219025E1BF1137E00005F00 /* ClientConstantsExtension.swift */; };
-		321902611BF25D9B00005F00 /* StudentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321902601BF25D9B00005F00 /* StudentLocation.swift */; };
+		321902611BF25D9B00005F00 /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321902601BF25D9B00005F00 /* StudentInformation.swift */; };
 		3241CA2A1BF0F10E00F49CF3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3241CA291BF0F10E00F49CF3 /* MapKit.framework */; };
 		326B27E11C0274B200923A6E /* Annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326B27E01C0274B100923A6E /* Annotation.swift */; };
 		326EDA0E1BEFC26A00004D53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326EDA0D1BEFC26A00004D53 /* AppDelegate.swift */; };
@@ -30,7 +30,7 @@
 		3219025A1BF10B9D00005F00 /* NewLocationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewLocationVC.swift; sourceTree = "<group>"; };
 		3219025C1BF1135000005F00 /* OTMClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMClient.swift; sourceTree = "<group>"; };
 		3219025E1BF1137E00005F00 /* ClientConstantsExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientConstantsExtension.swift; sourceTree = "<group>"; };
-		321902601BF25D9B00005F00 /* StudentLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentLocation.swift; sourceTree = "<group>"; };
+		321902601BF25D9B00005F00 /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
 		3241CA291BF0F10E00F49CF3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		326B27E01C0274B100923A6E /* Annotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Annotation.swift; sourceTree = "<group>"; };
 		326EDA0A1BEFC26A00004D53 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,7 +84,7 @@
 				32CAD4931C0BC4F90059FE0B /* View Controllers */,
 				3219025E1BF1137E00005F00 /* ClientConstantsExtension.swift */,
 				326B27E01C0274B100923A6E /* Annotation.swift */,
-				321902601BF25D9B00005F00 /* StudentLocation.swift */,
+				321902601BF25D9B00005F00 /* StudentInformation.swift */,
 				32CAD4941C0BFB610059FE0B /* Refreshable Protocol.swift */,
 				326EDA0D1BEFC26A00004D53 /* AppDelegate.swift */,
 				326EDA161BEFC26A00004D53 /* Assets.xcassets */,
@@ -183,7 +183,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				321902611BF25D9B00005F00 /* StudentLocation.swift in Sources */,
+				321902611BF25D9B00005F00 /* StudentInformation.swift in Sources */,
 				32CAD4921C0BC4B10059FE0B /* MapVC.swift in Sources */,
 				3219025D1BF1135000005F00 /* OTMClient.swift in Sources */,
 				3219025F1BF1137E00005F00 /* ClientConstantsExtension.swift in Sources */,

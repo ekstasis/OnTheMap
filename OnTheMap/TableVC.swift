@@ -44,22 +44,22 @@ class TableVC: UITableViewController, Refreshable {
   }
   
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return client.studentLocations.count
+    return StudentInformation.studentLocations.count
   }
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     
     let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
     
-    cell.textLabel!.text = client.studentLocations[indexPath.row].fullName
-    cell.detailTextLabel!.text = client.studentLocations[indexPath.row].mediaURL
+    cell.textLabel!.text = StudentInformation.studentLocations[indexPath.row].fullName
+    cell.detailTextLabel!.text = StudentInformation.studentLocations[indexPath.row].mediaURL
     
     return cell
   }
   
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     
-    var url = client.studentLocations[indexPath.row].mediaURL
+    var url = StudentInformation.studentLocations[indexPath.row].mediaURL
     
     // URL must have http(s)://
     let range = url.rangeOfString("http", options: NSStringCompareOptions.CaseInsensitiveSearch)
